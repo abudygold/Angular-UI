@@ -6,6 +6,7 @@
 
 - [Search UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
 - [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#table-ui-component)
+- [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#table-ui-component)
 - Base Service
 - Icon Service
 - Input Currency Directive
@@ -62,9 +63,13 @@ export class AppModule {}
 #### component.ts
 
 ```typescript
+...
+
 public onSearch(e: any): void {
     console.log(e);
 }
+
+...
 ```
 
 ### Table UI Component
@@ -79,6 +84,8 @@ public onSearch(e: any): void {
 
 ```typescript
 import { TABLE_USER_CONST } from './app-config.const';
+
+....
 
 public table: TableModel = TABLE_USER_CONST;
 ```
@@ -132,7 +139,7 @@ const NAMES: string[] = [
 	'Elizabeth',
 ];
 
-function createNewUser(id: number): UserData {
+const createNewUser = (id: number): UserData => {
 	const name =
 		NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
 		' ' +
@@ -148,7 +155,7 @@ function createNewUser(id: number): UserData {
 		priceRupiah: '112000000',
 		approveTime: '2024-02-27T12:42:04.629923+07:00',
 	};
-}
+};
 /* ./ Dummy Data  */
 
 /* Table  */
@@ -202,8 +209,47 @@ TableConfig.columns = [
 TableConfig.dataSource = new MatTableDataSource(
 	Array.from({ length: 100 }, (_, k) => createNewUser(k + 1))
 );
-
 /* ./ Table  */
 
 export const TABLE_USER_CONST = TableConfig;
+```
+
+### Confirmation UI Component
+
+#### component.ts
+
+```typescript
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
+
+...
+
+constructor(private dialog: MatDialog) {}
+
+...
+
+public openDialog(): void {
+    const confirmation: IConfirmation = {
+        title: 'Test',
+        content:
+            "<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
+        submitBtn: 'Simpan',
+        cancelBtn: 'Batal',
+    };
+
+    const _dialog = this.dialog.open(ConfirmationComponent, {
+        width: '500px',
+        autoFocus: false,
+        data: {
+            options: confirmation,
+        },
+    });
+
+    _dialog.componentInstance.options = confirmation;
+    _dialog.afterClosed().subscribe((resp) => {
+        if (!resp) return;
+
+        console.log(resp);
+    });
+}
 ```
