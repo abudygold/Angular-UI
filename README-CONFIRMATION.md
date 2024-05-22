@@ -5,11 +5,11 @@
 ## Features
 
 - Component
-  - [Search UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
-  - [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-TABLE.md)
-  - [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
-  - [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-CONFIRMATION.md)
-  - [Button UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
+  - [Search UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
+  - [Table UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-TABLE.md)
+  - [Form UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
+  - [Confirmation UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-CONFIRMATION.md)
+  - [Button UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
 - Service
   - [BaseService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-SERVICE.md)
   - [IconService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#icon-service)
@@ -52,30 +52,6 @@ import { AdlLibModule } from '@adl/angular-ui';
 	],
 })
 export class AppModule {}
-```
-
-### Search UI Component
-
-#### html
-
-```html
-<adl-ui-search
-	[options]="{
-			placeholder: 'Search'
-		}"
-	(searchValue)="onSearch($event)"></adl-ui-search>
-```
-
-#### component.ts
-
-```typescript
-...
-
-public onSearch(e: any): void {
-    console.log(e);
-}
-
-...
 ```
 
 ### Confirmation UI Component
