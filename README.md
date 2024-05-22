@@ -9,12 +9,15 @@
 - [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
 - [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-CONFIRMATION.md)
 - [Button UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
-- Base Service
-- Icon Service
-- Input Currency Directive
-- Only Number Directive
-- Remove Space Text Field Directive
-- Currency Pipe (Rupiah)
+- Service
+  - [BaseService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
+  - [IconService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#iconservice)
+- Directive
+  - Input Currency
+  - Only Number
+  - Remove Space Text Field
+- Pipe
+  - Currency (Rupiah)
 - Base Model
   - HTTP Body Request Pagination Model
   - HTTP Body Request Pagination with Filter Model
@@ -92,4 +95,19 @@ public onSearch(e: any): void {
         color: 'primary',
         name: 'Batal'
     }"></adl-ui-button>
+```
+
+### Icon Service
+
+#### component.ts
+
+```typescript
+import { IconService } from '@adl/angular-ui';
+import { IconsList } from '../assets/svg/IconsList';
+
+...
+
+constructor(private iconService: IconService) {
+  iconService.registerIcons(IconsList);
+}
 ```
