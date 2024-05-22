@@ -5,8 +5,8 @@
 ## Features
 
 - [Search UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
-- [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#table-ui-component)
-- [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#form-ui-component)
+- [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-Table.md)
+- [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-Form.md)
 - [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#confirmation-ui-component)
 - [Button UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
 - Base Service
