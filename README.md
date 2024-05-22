@@ -6,8 +6,9 @@
 
 - [Search UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
 - [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#table-ui-component)
-- [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#confirmation-ui-component)
 - [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#form-ui-component)
+- [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#confirmation-ui-component)
+- [Button UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
 - Base Service
 - Icon Service
 - Input Currency Directive
@@ -215,46 +216,6 @@ TableConfig.dataSource = new MatTableDataSource(
 export const TABLE_USER_CONST = TableConfig;
 ```
 
-### Confirmation UI Component
-
-#### component.ts
-
-```typescript
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
-
-...
-
-constructor(private dialog: MatDialog) {}
-
-...
-
-public openDialog(): void {
-    const confirmation: IConfirmation = {
-        title: 'Test',
-        content:
-            "<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
-        submitBtn: 'Simpan',
-        cancelBtn: 'Batal',
-    };
-
-    const _dialog = this.dialog.open(ConfirmationComponent, {
-        width: '500px',
-        autoFocus: false,
-        data: {
-            options: confirmation,
-        },
-    });
-
-    _dialog.componentInstance.options = confirmation;
-    _dialog.afterClosed().subscribe((resp) => {
-        if (!resp) return;
-
-        console.log(resp);
-    });
-}
-```
-
 ### Form UI Component
 
 #### html
@@ -383,4 +344,76 @@ const SampleForm = {
 /* ./ Form  */
 
 export const SAMPLE_FORM_CONST = SampleForm;
+```
+
+### Confirmation UI Component
+
+#### html
+
+```html
+<adl-ui-button
+	[options]="{
+        variant: 'basic',
+        color: 'primary',
+        name: 'Open Dialog'
+    }"
+	(click)="openDialog()"></adl-ui-button>
+```
+
+#### component.ts
+
+```typescript
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
+
+...
+
+constructor(private dialog: MatDialog) {}
+
+...
+
+public openDialog(): void {
+    const confirmation: IConfirmation = {
+        title: 'Test',
+        content:
+            "<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
+        submitBtn: 'Simpan',
+        cancelBtn: 'Batal',
+    };
+
+    const _dialog = this.dialog.open(ConfirmationComponent, {
+        width: '500px',
+        autoFocus: false,
+        data: {
+            options: confirmation,
+        },
+    });
+
+    _dialog.componentInstance.options = confirmation;
+    _dialog.afterClosed().subscribe((resp) => {
+        if (!resp) return;
+
+        console.log(resp);
+    });
+}
+```
+
+### Button UI Component
+
+#### html
+
+```html
+<adl-ui-button
+	[options]="{
+        variant: 'flat',
+        color: 'primary',
+        name: 'Simpan'
+    }"></adl-ui-button>
+
+<adl-ui-button
+	[options]="{
+        variant: 'stroked',
+        color: 'primary',
+        name: 'Batal'
+    }"></adl-ui-button>
 ```
