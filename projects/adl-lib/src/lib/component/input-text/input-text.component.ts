@@ -40,17 +40,6 @@ import { FormComponent } from '../../core/common';
 			(input)="onInput($event)" />
 		<input
 			*ngIf="
-				options.field?.directive?.inputCurrency &&
-				!options.field?.directive?.onlyNumber
-			"
-			matInput
-			appEmptySpace
-			appInputCurrency
-			[formControl]="form"
-			[placeholder]="options.placeholder || ''"
-			(input)="onInput($event)" />
-		<input
-			*ngIf="
 				options.field?.directive?.onlyNumber &&
 				!options.field?.directive?.inputCurrency
 			"
@@ -62,8 +51,10 @@ import { FormComponent } from '../../core/common';
 			(input)="onInput($event)" />
 		<input
 			*ngIf="
-				options.field?.directive?.onlyNumber &&
-				options.field?.directive?.inputCurrency
+				(options.field?.directive?.onlyNumber &&
+					options.field?.directive?.inputCurrency) ||
+				(options.field?.directive?.inputCurrency &&
+					!options.field?.directive?.onlyNumber)
 			"
 			matInput
 			appEmptySpace
