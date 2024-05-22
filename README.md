@@ -33,6 +33,8 @@
 npm i @adl/angular-ui
 ```
 
+### Import the Module
+
 ```typescript
 import { AdlLibModule } from '@adl/angular-ui';
 
