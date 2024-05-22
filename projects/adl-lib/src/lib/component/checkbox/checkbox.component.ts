@@ -70,7 +70,7 @@ import { FormComponent } from '../../core/common';
 				<ul [ngClass]="{ 'padding-left': !options.checkbox?.selectAll }">
 					<li *ngFor="let item of options.checkbox?.data; let i = index">
 						<mat-checkbox
-							[(ngModel)]="item.isCheck"
+							[(ngModel)]="item.checked"
 							(ngModelChange)="updateAll()">
 							{{ item.label }}
 						</mat-checkbox>
@@ -95,14 +95,14 @@ export class CheckboxComponent extends FormComponent {
 	public updateAll() {
 		this.allCheck =
 			this.options.checkbox?.data != null &&
-			this.options.checkbox?.data.every(t => t.isCheck);
+			this.options.checkbox?.data.every(t => t.checked);
 
 		this.getValue.emit(this.options.checkbox?.data);
 
 		if (!this.options.checkbox?.data) return;
 
 		this.form.setValue(
-			this.options.checkbox.data.filter(t => t.isCheck).length > 0 ?? null
+			this.options.checkbox.data.filter(t => t.checked).length > 0 ?? null
 		);
 	}
 
@@ -110,20 +110,20 @@ export class CheckboxComponent extends FormComponent {
 		if (!this.options.checkbox?.data) return false;
 
 		return (
-			this.options.checkbox.data.filter(t => t.isCheck).length > 0 &&
+			this.options.checkbox.data.filter(t => t.checked).length > 0 &&
 			!this.allCheck
 		);
 	}
 
-	public setAll(isCheck: boolean) {
-		this.allCheck = isCheck;
+	public setAll(checked: boolean) {
+		this.allCheck = checked;
 
 		if (!this.options.checkbox?.data) return;
 
-		this.options.checkbox.data.forEach(t => (t.isCheck = isCheck));
+		this.options.checkbox.data.forEach(t => (t.checked = checked));
 		this.getValue.emit(this.options.checkbox.data);
 		this.form.setValue(
-			this.options.checkbox.data.filter(t => t.isCheck).length > 0 ?? null
+			this.options.checkbox.data.filter(t => t.checked).length > 0 ?? null
 		);
 	}
 }

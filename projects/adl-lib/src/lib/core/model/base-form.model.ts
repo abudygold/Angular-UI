@@ -44,12 +44,12 @@ export class FormModel {
 export class CheckboxModel {
 	public label: string;
 	public value: string;
-	public isCheck?: boolean;
+	public checked?: boolean;
 	public disabled?: boolean;
 
 	constructor() {
 		this.label = '';
 		this.value = '';
-		this.isCheck = false;
+		this.checked = false;
 	}
 }
