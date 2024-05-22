@@ -10,7 +10,6 @@ export class FormModel {
 		directive?: {
 			inputCurrency?: boolean;
 			onlyNumber?: boolean;
-			emptySpace?: boolean;
 		};
 	};
 	public dataOptions?: {

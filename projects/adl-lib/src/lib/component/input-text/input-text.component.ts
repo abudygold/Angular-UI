@@ -34,24 +34,44 @@ import { FormComponent } from '../../core/common';
 		<input
 			*ngIf="!options.field?.directive"
 			matInput
+			appEmptySpace
 			[formControl]="form"
 			[placeholder]="options.placeholder || ''"
-			(input)="onInput($event)"
-			appEmptySpace />
+			(input)="onInput($event)" />
 		<input
-			*ngIf="options.field?.directive?.inputCurrency"
+			*ngIf="
+				options.field?.directive?.inputCurrency &&
+				!options.field?.directive?.onlyNumber
+			"
 			matInput
+			appEmptySpace
+			appInputCurrency
 			[formControl]="form"
 			[placeholder]="options.placeholder || ''"
-			(input)="onInput($event)"
-			appInputCurrency />
+			(input)="onInput($event)" />
 		<input
-			*ngIf="options.field?.directive?.onlyNumber"
+			*ngIf="
+				options.field?.directive?.onlyNumber &&
+				!options.field?.directive?.inputCurrency
+			"
 			matInput
+			appEmptySpace
+			appOnlyNumber
 			[formControl]="form"
 			[placeholder]="options.placeholder || ''"
-			(input)="onInput($event)"
-			appOnlyNumber />
+			(input)="onInput($event)" />
+		<input
+			*ngIf="
+				options.field?.directive?.onlyNumber &&
+				options.field?.directive?.inputCurrency
+			"
+			matInput
+			appEmptySpace
+			appOnlyNumber
+			appInputCurrency
+			[formControl]="form"
+			[placeholder]="options.placeholder || ''"
+			(input)="onInput($event)" />
 		<!-- ./ Input Field -->
 		<mat-icon
 			*ngIf="options.matPrefix"

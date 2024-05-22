@@ -16,7 +16,7 @@ export class EmptySpaceDirective {
 	) {}
 
 	private setValueChange() {
-		const input = this.ngControl.value.trim().length;
+		const input = this.ngControl.value?.trim().length;
 
 		if (input === 0) this.ngControl.control?.setValue(null);
 	}
