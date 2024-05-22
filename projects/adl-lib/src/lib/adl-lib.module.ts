@@ -19,9 +19,12 @@ import { TableComponent } from './component/table';
 import { ConfirmationComponent } from './component/confirmation';
 import { InputTextComponent } from './component/input-text';
 import { SelectComponent } from './component/select';
-import { RupiahPipe } from '../lib/core/pipes/rupiah';
 import { CheckboxComponent } from './component/checkbox';
 import { RadioComponent } from './component/radio';
+import { InputCurrencyDirective } from '../lib/core/directives/input-currency';
+import { OnlyNumberDirective } from '../lib/core/directives/only-number';
+import { EmptySpaceDirective } from '../lib/core/directives/empty-space';
+import { RupiahPipe } from '../lib/core/pipes/rupiah';
 
 @NgModule({
 	declarations: [
@@ -33,6 +36,9 @@ import { RadioComponent } from './component/radio';
 		SelectComponent,
 		CheckboxComponent,
 		RadioComponent,
+		InputCurrencyDirective,
+		OnlyNumberDirective,
+		EmptySpaceDirective,
 		RupiahPipe,
 	],
 	imports: [

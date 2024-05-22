@@ -1,6 +1,4 @@
-import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { FormModel } from '../../core/model';
+import { Component } from '@angular/core';
 import { FormComponent } from '../../core/common';
 
 @Component({
@@ -32,11 +30,29 @@ import { FormComponent } from '../../core/common';
 		<mat-label>
 			{{ options.label }}
 		</mat-label>
+		<!-- Input Field -->
 		<input
+			*ngIf="!options.field?.directive"
 			matInput
 			[formControl]="form"
 			[placeholder]="options.placeholder || ''"
-			(input)="onInput($event)" />
+			(input)="onInput($event)"
+			appEmptySpace />
+		<input
+			*ngIf="options.field?.directive?.inputCurrency"
+			matInput
+			[formControl]="form"
+			[placeholder]="options.placeholder || ''"
+			(input)="onInput($event)"
+			appInputCurrency />
+		<input
+			*ngIf="options.field?.directive?.onlyNumber"
+			matInput
+			[formControl]="form"
+			[placeholder]="options.placeholder || ''"
+			(input)="onInput($event)"
+			appOnlyNumber />
+		<!-- ./ Input Field -->
 		<mat-icon
 			*ngIf="options.matPrefix"
 			matPrefix
@@ -63,7 +79,7 @@ import { FormComponent } from '../../core/common';
 		</mat-error>
 	</mat-form-field>`,
 })
-export class InputTextComponent extends FormComponent implements OnInit {
+export class InputTextComponent extends FormComponent {
 	private debounceTimer: any;
 	private debounceTime: number = 600;
 

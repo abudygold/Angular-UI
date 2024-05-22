@@ -7,6 +7,11 @@ export class FormModel {
 			validators: any[];
 			message: any[];
 		};
+		directive?: {
+			inputCurrency?: boolean;
+			onlyNumber?: boolean;
+			emptySpace?: boolean;
+		};
 	};
 	public dataOptions?: {
 		data: any[];

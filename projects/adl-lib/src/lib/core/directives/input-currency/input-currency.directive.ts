@@ -1,4 +1,4 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, Self } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
@@ -7,7 +7,7 @@ import { NgControl } from '@angular/forms';
 export class InputCurrencyDirective {
 	private nominalValue!: string;
 
-	constructor(private ngControl: NgControl) {}
+	constructor(@Self() private ngControl: NgControl) {}
 
 	@HostListener('keyup', ['$event'])
 	onkeyup(event: Event) {
