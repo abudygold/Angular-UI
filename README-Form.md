@@ -6,7 +6,7 @@
 
 - [Search UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
 - [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-Table.md)
-- [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-Form.md)
+- [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#form-ui-component)
 - [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#confirmation-ui-component)
 - [Button UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
 - Base Service
@@ -50,98 +50,132 @@ import { AdlLibModule } from '@adl/angular-ui';
 export class AppModule {}
 ```
 
-### Search UI Component
+### Form UI Component
 
 #### html
 
 ```html
-<adl-ui-search
+<adl-ui-input-text
 	[options]="{
-			placeholder: 'Search'
-		}"
-	(searchValue)="onSearch($event)"></adl-ui-search>
-```
-
-#### component.ts
-
-```typescript
-...
-
-public onSearch(e: any): void {
-    console.log(e);
-}
-
-...
-```
-
-### Confirmation UI Component
-
-#### html
-
-```html
-<adl-ui-button
-	[options]="{
-        variant: 'basic',
-        color: 'primary',
-        name: 'Open Dialog'
+        label: 'First Name',
+        appearance: 'outline',
+        field: {
+            value: '',
+            validation: {
+                validators: formValidator.firstName.validators,
+                message: formValidator.firstName.validationMessages
+            }
+        }
     }"
-	(click)="openDialog()"></adl-ui-button>
+	(getValue)="onSearch($event)"></adl-ui-input-text>
+<!-- put the value key to define default value -->
+
+<adl-ui-radio
+	[options]="{
+        label: 'Jenis Kelamin:',
+        checkbox: {
+            data: [
+                {
+                    label: 'Laki-laki',
+                    value: 'pria'
+                },
+                {
+                    label: 'Perempuan',
+                    value: 'wanita'
+                }
+            ]
+        },
+        field: {
+            value: '',
+            validation: {
+                validators: formValidator.gender.validators,
+                message: formValidator.gender.validationMessages
+            }
+        }
+    }"
+	(getValue)="onSearch($event)"></adl-ui-radio>
+<!-- put the value key to define default value -->
+
+<adl-ui-checkbox
+	[options]="{
+        label: 'Hobby Anda:',
+        checkbox: {
+            data: [
+                {
+                    label: 'Membaca Buku',
+                    value: 'baca',
+                    disabled: false,
+                    checked: true
+                },
+                {
+                    label: 'Bermain Sepak Bola',
+                    value: 'sepak_bola',
+                    disabled: false
+                },
+                {
+                    label: 'Berenang',
+                    value: 'berenang',
+                    disabled: false
+                }
+            ],
+            isVertical: true
+        },
+        field: {
+            value: '',
+            validation: {
+                validators: formValidator.hobby.validators,
+                message: formValidator.hobby.validationMessages
+            }
+        }
+    }"
+	(getValue)="onSearch($event)"></adl-ui-checkbox>
+<!-- add checked key in the data to default checked -->
 ```
 
 #### component.ts
 
 ```typescript
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
+import { SAMPLE_FORM_CONST} from './app-config.const';
 
 ...
 
-constructor(private dialog: MatDialog) {}
-
-...
-
-public openDialog(): void {
-    const confirmation: IConfirmation = {
-        title: 'Test',
-        content:
-            "<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
-        submitBtn: 'Simpan',
-        cancelBtn: 'Batal',
-    };
-
-    const _dialog = this.dialog.open(ConfirmationComponent, {
-        width: '500px',
-        autoFocus: false,
-        data: {
-            options: confirmation,
-        },
-    });
-
-    _dialog.componentInstance.options = confirmation;
-    _dialog.afterClosed().subscribe((resp) => {
-        if (!resp) return;
-
-        console.log(resp);
-    });
-}
+public formValidator: any = SAMPLE_FORM_CONST;
 ```
 
-### Button UI Component
+#### const.ts
 
-#### html
+```typescript
+/* Form  */
+const SampleForm = {
+	firstName: {
+		validators: [
+			Validators.required,
+			Validators.minLength(10),
+			Validators.maxLength(30),
+		],
+		validationMessages: [
+			{ type: 'required', message: 'First name is required' },
+			{ type: 'minlength', message: 'Minimum characters: 10' },
+			{ type: 'maxlength', message: 'Maximum characters: 30' },
+		],
+	},
+	lastName: {
+		validators: [Validators.required, Validators.maxLength(30)],
+		validationMessages: [
+			{ type: 'required', message: 'Last name is required' },
+			{ type: 'maxlength', message: 'Maximum characters: 30' },
+		],
+	},
+	gender: {
+		validators: [Validators.required],
+		validationMessages: [{ type: 'required', message: 'Gender is required' }],
+	},
+	hobby: {
+		validators: [Validators.required],
+		validationMessages: [{ type: 'required', message: 'Hobby is required' }],
+	},
+};
+/* ./ Form  */
 
-```html
-<adl-ui-button
-	[options]="{
-        variant: 'flat',
-        color: 'primary',
-        name: 'Simpan'
-    }"></adl-ui-button>
-
-<adl-ui-button
-	[options]="{
-        variant: 'stroked',
-        color: 'primary',
-        name: 'Batal'
-    }"></adl-ui-button>
+export const SAMPLE_FORM_CONST = SampleForm;
 ```
