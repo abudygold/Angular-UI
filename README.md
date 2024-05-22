@@ -4,7 +4,7 @@
 
 ## Features
 
-- Search UI
+- [Search UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
 - Table Component UI
 - Base Service
 - Icon Service
