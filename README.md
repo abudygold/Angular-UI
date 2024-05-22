@@ -58,7 +58,7 @@ export class AppModule {}
 ```
 
 ```typescript
-onSearch(e: any): void {
+public onSearch(e: any): void {
     console.log(e);
 }
 ```
