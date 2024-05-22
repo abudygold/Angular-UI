@@ -46,3 +46,19 @@ import { AdlLibModule } from '@adl/angular-ui';
 })
 export class AppModule {}
 ```
+
+### Search UI Component
+
+```html
+<adl-ui-search
+	[options]="{
+			placeholder: 'Search'
+		}"
+	(searchValue)="onSearch($event)"></adl-ui-search>
+```
+
+```typescript
+onSearch(e: any): void {
+    console.log(e);
+}
+```
