@@ -5,9 +5,9 @@
 ## Features
 
 - [Search UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
-- [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-Table.md)
-- [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-Form.md)
-- [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#confirmation-ui-component)
+- [Table UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-TABLE.md)
+- [Form UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
+- [Confirmation UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-CONFIRMATION.md)
 - [Button UI Component](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
 - Base Service
 - Icon Service
@@ -72,58 +72,6 @@ public onSearch(e: any): void {
 }
 
 ...
-```
-
-### Confirmation UI Component
-
-#### html
-
-```html
-<adl-ui-button
-	[options]="{
-        variant: 'basic',
-        color: 'primary',
-        name: 'Open Dialog'
-    }"
-	(click)="openDialog()"></adl-ui-button>
-```
-
-#### component.ts
-
-```typescript
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
-
-...
-
-constructor(private dialog: MatDialog) {}
-
-...
-
-public openDialog(): void {
-    const confirmation: IConfirmation = {
-        title: 'Test',
-        content:
-            "<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
-        submitBtn: 'Simpan',
-        cancelBtn: 'Batal',
-    };
-
-    const _dialog = this.dialog.open(ConfirmationComponent, {
-        width: '500px',
-        autoFocus: false,
-        data: {
-            options: confirmation,
-        },
-    });
-
-    _dialog.componentInstance.options = confirmation;
-    _dialog.afterClosed().subscribe((resp) => {
-        if (!resp) return;
-
-        console.log(resp);
-    });
-}
 ```
 
 ### Button UI Component
