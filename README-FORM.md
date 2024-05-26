@@ -5,14 +5,14 @@
 ## Features
 
 - Component
-  - [Search UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
-  - [Table UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-TABLE.md)
-  - [Form UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
-  - [Confirmation UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-CONFIRMATION.md)
-  - [Button UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
+  - [Search UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#search-ui-component)
+  - [Table UI](https://github.com/abudygold/Angular-UI/blob/main/README-TABLE.md)
+  - [Form UI](https://github.com/abudygold/Angular-UI/blob/main/README-FORM.md)
+  - [Confirmation UI](https://github.com/abudygold/Angular-UI/blob/main/README-CONFIRMATION.md)
+  - [Button UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#button-ui-component)
 - Service
-  - [BaseService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-SERVICE.md)
-  - [IconService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#icon-service)
+  - [BaseService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#base-service)
+  - [IconService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#icon-service)
 - Directive
   - Input Currency
   - Only Number
@@ -64,15 +64,44 @@ export class AppModule {}
         label: 'First Name',
         appearance: 'outline',
         field: {
-            value: '',
+            value: 'Steven',
             validation: {
                 validators: formValidator.firstName.validators,
                 message: formValidator.firstName.validationMessages
             }
         }
     }"
+	[isSaveClicked]="isSubmit"
 	(getValue)="onSearch($event)"></adl-ui-input-text>
-<!-- put the value key to define default value -->
+
+<adl-ui-select
+	[options]="{
+        label: 'Gender',
+        appearance: 'outline',
+        selectOptions: {
+            label: 'label',
+            value: 'value',
+            data: [
+                {
+                    label: 'Men',
+                    value: 'men'
+                },
+                {
+                    label: 'Women',
+                    value: 'women'
+                }
+            ]
+        },
+        field: {
+            value: '',
+            validation: {
+                validators: formValidator.gender.validators,
+                message: formValidator.gender.validationMessages
+            }
+        }
+    }"
+	[isSaveClicked]="isSubmit"
+	(getValue)="onSearch($event)"></adl-ui-select>
 
 <adl-ui-radio
 	[options]="{
@@ -90,15 +119,15 @@ export class AppModule {}
             ]
         },
         field: {
-            value: '',
+            value: 'pria',
             validation: {
                 validators: formValidator.gender.validators,
                 message: formValidator.gender.validationMessages
             }
         }
     }"
-	(getValue)="onSearch($event)"></adl-ui-radio>
-<!-- put the value key to define default value -->
+	[isSaveClicked]="isSubmit"
+	(getValue)="onChecked($event)"></adl-ui-radio>
 
 <adl-ui-checkbox
 	[options]="{
@@ -108,18 +137,16 @@ export class AppModule {}
                 {
                     label: 'Membaca Buku',
                     value: 'baca',
-                    disabled: false,
                     checked: true
                 },
                 {
                     label: 'Bermain Sepak Bola',
                     value: 'sepak_bola',
-                    disabled: false
                 },
                 {
                     label: 'Berenang',
                     value: 'berenang',
-                    disabled: false
+                    disabled: true
                 }
             ],
             isVertical: true
@@ -132,18 +159,47 @@ export class AppModule {}
             }
         }
     }"
-	(getValue)="onSearch($event)"></adl-ui-checkbox>
-<!-- add checked key in the data to default checked -->
+	[isSaveClicked]="isSubmit"
+	(getValue)="onChecked($event)"></adl-ui-checkbox>
+
+<adl-ui-button
+	[options]="{
+        variant: 'flat',
+        color: 'primary',
+        name: 'Simpan'
+    }"
+	(click)="onSave()"></adl-ui-button>
 ```
 
 #### component.ts
 
 ```typescript
 import { SAMPLE_FORM_CONST} from './app-config.const';
+import { CheckboxModel } from '@adl/angular-ui';
 
 ...
 
-public formValidator: any = SAMPLE_FORM_CONST;
+formValidator: any = SAMPLE_FORM_CONST;
+isSubmit: boolean = false;
+
+....
+
+onChecked(e: any): void {
+    console.log(e);
+}
+
+onChecked(e: CheckboxModel[]): void {
+    console.log(e.filter((t: CheckboxModel) => t.checked));
+}
+
+onSave(): void {
+    this.isSubmit = true;
+    setTimeout(() => {
+        this.isSubmit = false;
+    }, 2000);
+}
+
+...
 ```
 
 #### const.ts

@@ -12,7 +12,7 @@ interface IButton {
 	color: 'primary' | 'accent' | 'warn';
 	name: string;
 	icon?: string;
-	isDisabled?: boolean;
+	disabled?: boolean;
 }
 
 @Component({
@@ -20,46 +20,56 @@ interface IButton {
 	template: `<button
 			*ngIf="options.variant === 'basic'"
 			mat-button
-			[color]="options.color">
+			[color]="options.color"
+			[disabled]="options.disabled">
 			{{ options.name }}
 		</button>
 
 		<button
 			*ngIf="options.variant === 'raised'"
 			mat-raised-button
-			[color]="options.color">
+			[color]="options.color"
+			[disabled]="options.disabled">
 			{{ options.name }}
 		</button>
 
 		<button
 			*ngIf="options.variant === 'stroked'"
 			mat-stroked-button
-			[color]="options.color">
+			[color]="options.color"
+			[disabled]="options.disabled">
 			{{ options.name }}
 		</button>
 
 		<button
 			*ngIf="options.variant === 'flat'"
 			mat-flat-button
-			[color]="options.color">
+			[color]="options.color"
+			[disabled]="options.disabled">
 			{{ options.name }}
 		</button>
 
 		<button
 			*ngIf="options.variant === 'icon'"
 			mat-icon-button
-			[color]="options.color">
+			[color]="options.color"
+			[disabled]="options.disabled">
 			{{ options.name }}
 		</button>
 
-		<button *ngIf="options.variant === 'fab'" mat-fab [color]="options.color">
+		<button
+			*ngIf="options.variant === 'fab'"
+			mat-fab
+			[color]="options.color"
+			[disabled]="options.disabled">
 			<mat-icon>{{ options.icon }}</mat-icon>
 		</button>
 
 		<button
 			*ngIf="options.variant === 'mini-fab'"
 			mat-mini-fab
-			[color]="options.color">
+			[color]="options.color"
+			[disabled]="options.disabled">
 			<mat-icon>{{ options.icon }}</mat-icon>
 		</button>`,
 })

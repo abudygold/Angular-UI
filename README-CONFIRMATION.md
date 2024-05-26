@@ -5,14 +5,14 @@
 ## Features
 
 - Component
-  - [Search UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
-  - [Table UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-TABLE.md)
-  - [Form UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
-  - [Confirmation UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-CONFIRMATION.md)
-  - [Button UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
+  - [Search UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#search-ui-component)
+  - [Table UI](https://github.com/abudygold/Angular-UI/blob/main/README-TABLE.md)
+  - [Form UI](https://github.com/abudygold/Angular-UI/blob/main/README-FORM.md)
+  - [Confirmation UI](https://github.com/abudygold/Angular-UI/blob/main/README-CONFIRMATION.md)
+  - [Button UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#button-ui-component)
 - Service
-  - [BaseService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-SERVICE.md)
-  - [IconService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#icon-service)
+  - [BaseService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#base-service)
+  - [IconService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#icon-service)
 - Directive
   - Input Currency
   - Only Number
@@ -80,7 +80,7 @@ constructor(private dialog: MatDialog) {}
 
 ...
 
-public openDialog(): void {
+openDialog(): void {
     const confirmation: IConfirmation = {
         title: 'Test',
         content:

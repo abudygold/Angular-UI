@@ -1,31 +1,28 @@
-import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { FormModel } from '../../core/model';
+import { Component } from '@angular/core';
 import { FormComponent } from '../../core/common';
 
 @Component({
 	selector: 'adl-ui-select',
 	styles: [
 		`
-			.adl-ui-input {
+			.adl-ui-select {
 				width: 100%;
-				.adl-ui-input-invalid {
-					color: #f44336;
-					font-size: 12px;
-				}
-				.mat-mdc-form-field-error-wrapper {
-					display: flex;
-					justify-content: flex-end;
-				}
-				.mat-mdc-form-field-error {
-					display: inline-block !important;
+				mat-error {
 					line-height: 0;
 				}
+				mat-error p {
+					margin-bottom: 0;
+					font-size: 12px;
+					color: #f44336;
+				}
+			}
+			.mat-mdc-form-field-error-wrapper {
+				padding: 0;
 			}
 		`,
 	],
 	template: `<mat-form-field
-		class="adl-ui-input"
+		class="adl-ui-select"
 		[appearance]="options.appearance || 'fill'"
 		[floatLabel]="options.floatLabel || 'auto'"
 		[id]="options.id || ''">
@@ -35,10 +32,11 @@ import { FormComponent } from '../../core/common';
 		<mat-select
 			[formControl]="form"
 			(selectionChange)="onSelectionChange($event.value)">
+			<mat-option value=""> -- Select {{ options.label || '' }} -- </mat-option>
 			<mat-option
-				*ngFor="let options of options.dataOptions?.data"
-				[value]="options[options.dataOptions?.value]">
-				{{ options[options.dataOptions?.label] }}
+				*ngFor="let option of options.selectOptions?.data"
+				[value]="option[options.selectOptions?.value || '']">
+				{{ option[options.selectOptions?.label || ''] }}
 			</mat-option>
 		</mat-select>
 		<mat-hint *ngIf="options.hint">
@@ -47,15 +45,13 @@ import { FormComponent } from '../../core/common';
 		<mat-error
 			align="end"
 			*ngFor="let validation of options.field?.validation?.message">
-			<p
-				*ngIf="form.touched && form.hasError(validation.type)"
-				class="adl-ui-input-invalid">
+			<p *ngIf="form.touched && form.hasError(validation.type)">
 				{{ validation.message }}
 			</p>
 		</mat-error>
 	</mat-form-field>`,
 })
-export class SelectComponent extends FormComponent implements OnInit {
+export class SelectComponent extends FormComponent {
 	constructor() {
 		super();
 	}

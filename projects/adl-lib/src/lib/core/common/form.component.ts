@@ -15,12 +15,19 @@ export class FormComponent implements OnInit {
 	@Input()
 	public options!: FormModel;
 
+	@Input()
+	set isSaveClicked(status: boolean) {
+		if (!this.form || !status) return;
+
+		this.form.markAllAsTouched();
+	}
+
 	constructor() {
 		this.getValue = new EventEmitter();
 	}
 
 	ngOnInit(): void {
-		if (this.options.isDisabled) {
+		if (this.options.disabled) {
 			/* If the field is disabled, doesn't check next code */
 			this.form.disable();
 			return;

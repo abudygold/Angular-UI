@@ -7,19 +7,25 @@ import { FormComponent } from '../../core/common';
 		`
 			.adl-ui-checkbox {
 				margin: 12px 0;
+				width: fit-content;
 				.checkbox-margin {
 					margin: 0 12px;
 				}
 				ul {
-					list-style-type: none;
 					margin-top: 4px;
+					list-style-type: none;
 					&.padding-left {
+						margin-bottom: 0 !important;
 						padding-left: 0 !important;
 					}
 				}
-				.adl-ui-input-invalid {
-					color: #f44336;
+				mat-error {
+					line-height: 0;
+				}
+				mat-error p {
+					margin-bottom: 0;
 					font-size: 12px;
+					color: #f44336;
 				}
 			}
 		`,
@@ -35,7 +41,7 @@ import { FormComponent } from '../../core/common';
 				class="checkbox-margin"
 				[id]="options.id + '_' + i || ''"
 				[value]="item.value"
-				[disabled]="item.disabled"
+				[disabled]="options.disabled || item.disabled || false"
 				[labelPosition]="options.checkbox?.labelPosition || 'after'"
 				*ngFor="let item of options.checkbox?.data; let i = index">
 				{{ item.label }}
@@ -44,9 +50,7 @@ import { FormComponent } from '../../core/common';
 			<mat-error
 				align="end"
 				*ngFor="let validation of options.field?.validation?.message">
-				<p
-					*ngIf="form.touched && form.hasError(validation.type)"
-					class="adl-ui-input-invalid">
+				<p *ngIf="form.touched && form.hasError(validation.type)">
 					{{ validation.message }}
 				</p>
 			</mat-error>
@@ -62,6 +66,7 @@ import { FormComponent } from '../../core/common';
 					class="example-margin"
 					[checked]="allCheck"
 					[indeterminate]="someComplete()"
+					[disabled]="options.disabled || false"
 					(change)="setAll($event.checked)">
 					{{ options.checkbox?.selectAll?.label }}
 				</mat-checkbox>
@@ -70,6 +75,7 @@ import { FormComponent } from '../../core/common';
 				<ul [ngClass]="{ 'padding-left': !options.checkbox?.selectAll }">
 					<li *ngFor="let item of options.checkbox?.data; let i = index">
 						<mat-checkbox
+							[disabled]="options.disabled || item.disabled || false"
 							[(ngModel)]="item.checked"
 							(ngModelChange)="updateAll()">
 							{{ item.label }}
@@ -81,9 +87,7 @@ import { FormComponent } from '../../core/common';
 			<mat-error
 				align="end"
 				*ngFor="let validation of options.field?.validation?.message">
-				<p
-					*ngIf="form.touched && form.hasError(validation.type)"
-					class="adl-ui-input-invalid">
+				<p *ngIf="form.touched && form.hasError(validation.type)">
 					{{ validation.message }}
 				</p>
 			</mat-error>
@@ -98,12 +102,7 @@ export class CheckboxComponent extends FormComponent {
 			this.options.checkbox?.data.every(t => t.checked);
 
 		this.getValue.emit(this.options.checkbox?.data);
-
-		if (!this.options.checkbox?.data) return;
-
-		this.form.setValue(
-			this.options.checkbox.data.filter(t => t.checked).length > 0 ?? null
-		);
+		this.checkCheckedData();
 	}
 
 	public someComplete(): boolean {
@@ -115,15 +114,23 @@ export class CheckboxComponent extends FormComponent {
 		);
 	}
 
-	public setAll(checked: boolean) {
-		this.allCheck = checked;
+	public setAll(_checked: boolean) {
+		this.allCheck = _checked;
 
 		if (!this.options.checkbox?.data) return;
 
-		this.options.checkbox.data.forEach(t => (t.checked = checked));
+		this.options.checkbox.data.forEach(t => (t.checked = _checked));
 		this.getValue.emit(this.options.checkbox.data);
-		this.form.setValue(
-			this.options.checkbox.data.filter(t => t.checked).length > 0 ?? null
-		);
+		this.checkCheckedData();
+	}
+
+	private checkCheckedData() {
+		if (!this.options.checkbox?.data) return;
+
+		const checked = this.options.checkbox.data.filter(t => t.checked);
+		this.form.setValue(checked.length > 0 ? checked.length > 0 : null);
+
+		if (this.options.field?.validation && checked.length === 0)
+			this.form.markAllAsTouched();
 	}
 }

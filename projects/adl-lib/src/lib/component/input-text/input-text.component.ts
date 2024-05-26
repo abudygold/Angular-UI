@@ -7,18 +7,17 @@ import { FormComponent } from '../../core/common';
 		`
 			.adl-ui-input {
 				width: 100%;
-				.adl-ui-input-invalid {
-					color: #f44336;
-					font-size: 12px;
-				}
-				.mat-mdc-form-field-error-wrapper {
-					display: flex;
-					justify-content: flex-end;
-				}
-				.mat-mdc-form-field-error {
-					display: inline-block !important;
+				mat-error {
 					line-height: 0;
 				}
+				mat-error p {
+					margin-bottom: 0;
+					font-size: 12px;
+					color: #f44336;
+				}
+			}
+			.mat-mdc-form-field-error-wrapper {
+				padding: 0;
 			}
 		`,
 	],
@@ -82,9 +81,7 @@ import { FormComponent } from '../../core/common';
 		<mat-error
 			align="end"
 			*ngFor="let validation of options.field?.validation?.message">
-			<p
-				*ngIf="form.touched && form.hasError(validation.type)"
-				class="adl-ui-input-invalid">
+			<p *ngIf="form.touched && form.hasError(validation.type)">
 				{{ validation.message }}
 			</p>
 		</mat-error>

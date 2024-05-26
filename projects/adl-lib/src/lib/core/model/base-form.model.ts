@@ -12,11 +12,6 @@ export class FormModel {
 			onlyNumber?: boolean;
 		};
 	};
-	public dataOptions?: {
-		data: any[];
-		label: any;
-		value: any;
-	};
 	public appearance?: 'fill' | 'outline';
 	public floatLabel?: 'always' | 'auto';
 	public placeholder?: string;
@@ -29,7 +24,12 @@ export class FormModel {
 		svgIcon?: string;
 	};
 	public hint?: string;
-	public isDisabled?: boolean;
+	public disabled?: boolean;
+	public selectOptions?: {
+		data: any[];
+		label: string;
+		value: string;
+	};
 	public checkbox?: {
 		data: CheckboxModel[];
 		isVertical?: boolean;
@@ -41,7 +41,6 @@ export class FormModel {
 
 	constructor() {
 		this.label = '';
-		this.isDisabled = false;
 	}
 }
 
@@ -54,6 +53,5 @@ export class CheckboxModel {
 	constructor() {
 		this.label = '';
 		this.value = '';
-		this.checked = false;
 	}
 }

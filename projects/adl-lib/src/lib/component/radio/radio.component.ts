@@ -6,21 +6,26 @@ import { FormComponent } from '../../core/common';
 	styles: [
 		`
 			.adl-ui-radio {
+				width: fit-content;
 				.mat-mdc-radio-button ~ .mat-mdc-radio-button {
 					margin-left: 16px;
 				}
 				.radio-group {
+					margin: 15px 0;
 					display: flex;
 					flex-direction: column;
-					margin: 15px 0;
 					align-items: flex-start;
 				}
 				.radio-button {
 					margin: 5px !important;
 				}
-				.adl-ui-input-invalid {
-					color: #f44336;
+				mat-error {
+					line-height: 0;
+				}
+				mat-error p {
+					margin-bottom: 0;
 					font-size: 12px;
+					color: #f44336;
 				}
 			}
 		`,
@@ -39,7 +44,7 @@ import { FormComponent } from '../../core/common';
 				[ngClass]="{ 'radio-button': options.checkbox?.isVertical }"
 				[id]="options.id + '_' + i || ''"
 				[value]="item.value"
-				[disabled]="item.disabled"
+				[disabled]="options.disabled || item.disabled || false"
 				*ngFor="let item of options.checkbox?.data; let i = index">
 				{{ item.label }}
 			</mat-radio-button>
@@ -48,9 +53,7 @@ import { FormComponent } from '../../core/common';
 		<mat-error
 			align="end"
 			*ngFor="let validation of options.field?.validation?.message">
-			<p
-				*ngIf="form.touched && form.hasError(validation.type)"
-				class="adl-ui-input-invalid">
+			<p *ngIf="form.touched && form.hasError(validation.type)">
 				{{ validation.message }}
 			</p>
 		</mat-error>

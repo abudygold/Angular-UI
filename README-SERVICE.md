@@ -5,14 +5,14 @@
 ## Features
 
 - Component
-  - [Search UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#search-ui-component)
-  - [Table UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-TABLE.md)
-  - [Form UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-FORM.md)
-  - [Confirmation UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-CONFIRMATION.md)
-  - [Button UI](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#button-ui-component)
+  - [Search UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#search-ui-component)
+  - [Table UI](https://github.com/abudygold/Angular-UI/blob/main/README-TABLE.md)
+  - [Form UI](https://github.com/abudygold/Angular-UI/blob/main/README-FORM.md)
+  - [Confirmation UI](https://github.com/abudygold/Angular-UI/blob/main/README-CONFIRMATION.md)
+  - [Button UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#button-ui-component)
 - Service
-  - [BaseService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library/-/blob/master/README-SERVICE.md)
-  - [IconService](https://gitlab.axiatadigitallabs.com/fe-adli/angular-ui-library#icon-service)
+  - [BaseService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#base-service)
+  - [IconService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#icon-service)
 - Directive
   - Input Currency
   - Only Number
@@ -54,144 +54,31 @@ import { AdlLibModule } from '@adl/angular-ui';
 export class AppModule {}
 ```
 
-### Table UI Component
+### Base Service
 
-#### html
-
-```html
-<adl-ui-table *ngIf="table" [table]="table"></adl-ui-table>
-```
+### Icon Service
 
 #### component.ts
 
 ```typescript
-import { TABLE_USER_CONST } from './app-config.const';
+import { IconService } from '@adl/angular-ui';
+import { IconsList } from '../assets/svg/IconsList';
 
-....
+...
 
-public table: TableModel = TABLE_USER_CONST;
+constructor(private iconService: IconService) {
+  iconService.registerIcons(IconsList);
+}
 ```
 
-#### const.ts
+#### iconLists.ts (assets/svg/IconsList.ts)
 
 ```typescript
-import { TableModel } from '@adl/angular-ui';
-import { MatTableDataSource } from '@angular/material/table';
-
-/* Dummy Data  */
-interface UserData {
-	id: string;
-	name: string;
-	progress: number;
-	fruit: string;
-	price: number | string;
-	priceRupiah: number | string;
-	approveTime: string;
-}
-
-const FRUITS: string[] = [
-	'blueberry',
-	'lychee',
-	'kiwi',
-	'mango',
-	'peach',
-	'lime',
-	'pomegranate',
-	'pineapple',
-];
-const NAMES: string[] = [
-	'Maia',
-	'Asher',
-	'Olivia',
-	'Atticus',
-	'Amelia',
-	'Jack',
-	'Charlotte',
-	'Theodore',
-	'Isla',
-	'Oliver',
-	'Isabella',
-	'Jasper',
-	'Cora',
-	'Levi',
-	'Violet',
-	'Arthur',
-	'Mia',
-	'Thomas',
-	'Elizabeth',
+export const IconsList: { name: string; location: string }[] = [
+	{ name: 'menu_email', location: 'navigation/email.svg' },
 ];
 
-const createNewUser = (id: number): UserData => {
-	const name =
-		NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-		' ' +
-		NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-		'.';
-
-	return {
-		id: id.toString(),
-		name: name,
-		progress: Math.round(Math.random() * 100),
-		fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-		price: '112000000',
-		priceRupiah: '112000000',
-		approveTime: '2024-02-27T12:42:04.629923+07:00',
-	};
-};
-/* ./ Dummy Data  */
-
-/* Table  */
-const TableConfig = new TableModel();
-TableConfig.labels = [
-	'ID',
-	'Name',
-	'Progress',
-	'Fruit',
-	'Price',
-	'Price Rupiah',
-	'Approve Time',
-];
-TableConfig.columns = [
-	{
-		column: 'id',
-		type: 'string',
-	},
-	{
-		column: 'name',
-		type: 'string',
-	},
-	{
-		column: 'progress',
-		type: 'string',
-	},
-	{
-		column: 'fruit',
-		type: 'string',
-	},
-	{
-		column: 'price',
-		type: 'currency',
-		currencyOptions: {
-			code: 'GBP',
-			symbol: {
-				code: 'symbol-narrow',
-			},
-		},
-	},
-	{
-		column: 'priceRupiah',
-		type: 'rupiah',
-	},
-	{
-		column: 'approveTime',
-		type: 'date',
-		formatDate: 'YYYY-MM-dd',
-	},
-];
-TableConfig.dataSource = new MatTableDataSource(
-	Array.from({ length: 100 }, (_, k) => createNewUser(k + 1))
-);
-/* ./ Table  */
-
-export const TABLE_USER_CONST = TableConfig;
+/* USAGE EXAMPLE 
+  <mat-icon class="icon-menu" svgIcon="menu_email"></mat-icon>
+*/
 ```
