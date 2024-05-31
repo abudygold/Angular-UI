@@ -9,14 +9,14 @@ export class HttpBodyRespModel {
 	public totalPage!: number;
 
 	public convert(dto: any): HttpBodyRespModel {
-		this.status = dto.status ?? null;
-		this.errorCode = dto.errorCode ?? null;
-		this.data = dto.data ?? null;
-		this.code = dto.code ?? null;
-		this.message = dto.message ?? null;
-		this.haveNext = dto.haveNext ?? false;
-		this.totalRecord = dto.totalRecord ?? 0;
-		this.totalPage = dto.totalPage ?? 0;
+		this.status = dto?.status ?? null;
+		this.errorCode = dto?.errorCode ?? null;
+		this.data = Array.isArray(dto) ? dto : dto?.data ?? null;
+		this.code = dto?.code ?? null;
+		this.message = dto?.message ?? null;
+		this.haveNext = dto?.haveNext ?? false;
+		this.totalRecord = dto?.totalRecord ?? 0;
+		this.totalPage = dto?.totalPage ?? 0;
 
 		return this;
 	}
