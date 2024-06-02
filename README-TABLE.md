@@ -65,92 +65,52 @@ export class AppModule {}
 #### component.ts
 
 ```typescript
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { BaseService, TableModel } from '@adl/angular-ui';
 import { TABLE_USER_CONST } from './app-config.const';
+import { ResourceModel } from './shared/model';
 
-....
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+})
+export class AppComponent implements OnInit, OnDestroy {
+	public table: TableModel = TABLE_USER_CONST;
 
-table: TableModel = TABLE_USER_CONST;
+	private subscribers: Subscription[] = [];
+
+	constructor(private baseService: BaseService) {}
+
+	ngOnInit(): void {
+		this.getUnicornListService();
+	}
+
+	private getUnicornListService(): void {
+		const subs = this.baseService
+			.getPagingData(RESOURCE_PATH_CONST + '/unicorns', ResourceModel)
+			.subscribe(resp => {
+				this.table.dataSource = resp?.data ?? null;
+			});
+
+		this.subscribers.push(subs);
+	}
+
+	ngOnDestroy(): void {
+		this.subscribers.forEach(each => each.unsubscribe());
+	}
+}
 ```
 
 #### const.ts
 
 ```typescript
 import { TableModel } from '@adl/angular-ui';
-import { MatTableDataSource } from '@angular/material/table';
-
-/* Dummy Data  */
-interface UserData {
-	id: string;
-	name: string;
-	progress: number;
-	fruit: string;
-	price: number | string;
-	priceRupiah: number | string;
-	approveTime: string;
-}
-
-const FRUITS: string[] = [
-	'blueberry',
-	'lychee',
-	'kiwi',
-	'mango',
-	'peach',
-	'lime',
-	'pomegranate',
-	'pineapple',
-];
-const NAMES: string[] = [
-	'Maia',
-	'Asher',
-	'Olivia',
-	'Atticus',
-	'Amelia',
-	'Jack',
-	'Charlotte',
-	'Theodore',
-	'Isla',
-	'Oliver',
-	'Isabella',
-	'Jasper',
-	'Cora',
-	'Levi',
-	'Violet',
-	'Arthur',
-	'Mia',
-	'Thomas',
-	'Elizabeth',
-];
-
-const createNewUser = (id: number): UserData => {
-	const name =
-		NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-		' ' +
-		NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-		'.';
-
-	return {
-		id: id.toString(),
-		name: name,
-		progress: Math.round(Math.random() * 100),
-		fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-		price: '112000000',
-		priceRupiah: '112000000',
-		approveTime: '2024-02-27T12:42:04.629923+07:00',
-	};
-};
-/* ./ Dummy Data  */
 
 /* Table  */
 const TableConfig = new TableModel();
-TableConfig.labels = [
-	'ID',
-	'Name',
-	'Progress',
-	'Fruit',
-	'Price',
-	'Price Rupiah',
-	'Approve Time',
-];
+TableConfig.labels = ['ID', 'Name', 'Age', 'Colour'];
 TableConfig.columns = [
 	{
 		column: 'id',
@@ -161,36 +121,14 @@ TableConfig.columns = [
 		type: 'string',
 	},
 	{
-		column: 'progress',
+		column: 'age',
+		type: 'number',
+	},
+	{
+		column: 'colour',
 		type: 'string',
-	},
-	{
-		column: 'fruit',
-		type: 'string',
-	},
-	{
-		column: 'price',
-		type: 'currency',
-		currencyOptions: {
-			code: 'GBP',
-			symbol: {
-				code: 'symbol-narrow',
-			},
-		},
-	},
-	{
-		column: 'priceRupiah',
-		type: 'rupiah',
-	},
-	{
-		column: 'approveTime',
-		type: 'date',
-		formatDate: 'YYYY-MM-dd',
 	},
 ];
-TableConfig.dataSource = new MatTableDataSource(
-	Array.from({ length: 100 }, (_, k) => createNewUser(k + 1))
-);
 /* ./ Table  */
 
 export const TABLE_USER_CONST = TableConfig;
