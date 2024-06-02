@@ -14,9 +14,9 @@
   - [BaseService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#base-service)
   - [IconService](https://github.com/abudygold/Angular-UI/blob/main/README-SERVICE.md#icon-service)
 - Directive
-  - Input Currency
-  - Only Number
-  - Remove Space Text Field
+  - [Input Currency](https://github.com/abudygold/Angular-UI/blob/main/README-DIRECTIVE.md#input-currency)
+  - [Only Number](https://github.com/abudygold/Angular-UI/blob/main/README-DIRECTIVE.md#only-number)
+  - [Remove Space](https://github.com/abudygold/Angular-UI/blob/main/README-DIRECTIVE.md#remove-space)
 - Pipe
   - Currency (Rupiah)
 - Base Model
@@ -66,9 +66,11 @@ export const RESOURCE_PATH_CONST =
 #### component.ts
 
 ```typescript
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BaseService } from '@adl/angular-ui';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { Subscription } from 'rxjs';
+
 import { RESOURCE_PATH_CONST } from './app-config.const';
 import { ResourceModel } from './shared/model';
 import { ResourceReqModel } from './shared/model/resouce-req.model';
@@ -90,7 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	private getResourceListService(): void {
 		const subs = this.baseService
 			.getPagingData(RESOURCE_PATH_CONST + '/unicorns', ResourceModel)
-			.subscribe(resp => {
+			.subscribe((resp) => {
 				this.table.dataSource = resp?.data ?? null;
 			});
 
@@ -138,7 +140,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscribers.forEach(each => each.unsubscribe());
+		this.subscribers.forEach((each) => each.unsubscribe());
 	}
 }
 ```
