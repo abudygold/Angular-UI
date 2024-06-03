@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { IConfirmation } from '../../core/model/confirmation.model';
 
 @Component({
@@ -12,6 +13,13 @@ import { IConfirmation } from '../../core/model/confirmation.model';
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				margin-top: 1.5rem;
+			}
+			.adl-ui-confirmatin-content {
+				padding: 0 1.5rem;
+			}
+			.adl-ui-confirmatin-actions {
+				padding: 1rem 1.5rem;
 			}
 			.mdc-dialog__title::before {
 				display: none;
@@ -24,11 +32,11 @@ import { IConfirmation } from '../../core/model/confirmation.model';
 			<mat-icon mat-dialog-close class="pointer">close</mat-icon>
 		</h2>
 
-		<mat-dialog-content>
+		<mat-dialog-content class="adl-ui-confirmatin-content">
 			<p [innerHTML]="options.content"></p>
 		</mat-dialog-content>
 
-		<mat-dialog-actions>
+		<mat-dialog-actions class="adl-ui-confirmatin-actions">
 			<button
 				*ngIf="options.cancelBtn"
 				mat-stroked-button
