@@ -54,54 +54,59 @@ import { AdlLibModule } from '@adl/angular-ui';
 export class AppModule {}
 ```
 
-### Confirmation UI Component
-
-#### HTML
-
-```html
-<adl-ui-button
-	[options]="{
-        variant: 'basic',
-        color: 'primary',
-        name: 'Open Dialog'
-    }"
-	(click)="openDialog()"></adl-ui-button>
-```
+### HTTP Param Generator
 
 #### Component
 
 ```typescript
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
+import { generateHttpParams } from '@adl/angular-ui';
 
 ...
 
-constructor(private dialog: MatDialog) {}
+ngOnInit(): void {
+	generateHttpParams({
+		firstName: 'john',
+		lastName: 'doe',
+	}).toString();
+	/* Output: firstName=john&lastName=doe */
+}
+```
+
+### Enum to Option Generator
+
+#### Component
+
+```typescript
+import { generateEnumOption } from '@adl/angular-ui';
+import { ACTIVE_ENUM } from './app-config.const';
 
 ...
 
-openDialog(): void {
-    const confirmation: IConfirmation = {
-        title: 'Test',
-        content:
-            "<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
-        submitBtn: 'Simpan',
-        cancelBtn: 'Batal',
-    };
+public activeOption: BaseOptionModel[] = [];
 
-    const _dialog = this.dialog.open(ConfirmationComponent, {
-        width: '500px',
-        autoFocus: false,
-        data: {
-            options: confirmation,
-        },
-    });
+...
 
-    _dialog.componentInstance.options = confirmation;
-    _dialog.afterClosed().subscribe((resp) => {
-        if (!resp) return;
+ngOnInit(): void {
+	this.activeOption = generateEnumOption(ACTIVE_ENUM);
+	/* Output: [
+		{
+			"label": " Active",
+			"value": 0
+		},
+		{
+			"label": " Deactivate",
+			"value": 1
+		}
+	]
+	*/
+}
+```
 
-        console.log(resp);
-    });
+#### Const File
+
+```typescript
+export enum ACTIVE_ENUM {
+	'Active' = 0,
+	'Deactivate' = 1,
 }
 ```

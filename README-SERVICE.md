@@ -20,17 +20,17 @@
 - Pipe
   - [Currency (Rupiah)](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#currency-rupiah)
 - Base Model
-  - HTTP Body Request Pagination Model
-  - HTTP Body Request Pagination with Filter Model
-  - HTTP Body Resp Model
-  - Upload File Request Model
-  - Form Model
-  - Table Model
-  - Option Model
-  - Delete Model
+  - [HTTP Body Request Pagination Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#http-body-request-pagination-model)
+  - [HTTP Body Request Pagination with Filter Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#http-body-request-pagination-with-filter-model)
+  - [HTTP Body Resp Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#http-body-resp-model)
+  - [Upload File Request Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#upload-file-request-model)
+  - [Form Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#form-model)
+  - [Table Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#table-model)
+  - [Option Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#option-model)
+  - [Delete Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#delete-model)
 - Util
-  - HTTP Param Generator
-  - Enum to Option Generator
+  - [HTTP Param Generator](https://github.com/abudygold/Angular-UI/blob/main/README-UTIL.md#http-param-generator)
+  - [Enum to Option Generator](https://github.com/abudygold/Angular-UI/blob/main/README-UTIL.md#enum-to-option-generator)
 
 ## Getting started
 
