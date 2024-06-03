@@ -43,9 +43,22 @@ npm i @adl/angular-ui
 ### Import the Module in the Root Module
 
 ```typescript
+import { AdlLibModule } from '@adl/angular-ui';
+
+@NgModule({
+	imports: [
+		...,
+		AdlLibModule,
+	],
+})
+export class AppModule {}
+```
+
+### Import FormModule in the Module
+
+```typescript
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { AdlLibModule } from '@adl/angular-ui';
 
 @NgModule({
 	imports: [
@@ -53,10 +66,9 @@ import { AdlLibModule } from '@adl/angular-ui';
 		FormsModule,
 		ReactiveFormsModule,
 		MatFormFieldModule,
-		AdlLibModule,
 	],
 })
-export class AppModule {}
+export class ExampleModule {}
 ```
 
 ### Input Currency
