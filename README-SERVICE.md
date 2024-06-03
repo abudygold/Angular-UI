@@ -56,14 +56,14 @@ export class AppModule {}
 
 ### Base Service
 
-#### const file
+#### Const File
 
 ```typescript
 export const RESOURCE_PATH_CONST =
 	'https://crudcrud.com/api/b5bee03bb615487a8c54290a5eaf09cf';
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 import { BaseService } from '@adl/angular-ui';
@@ -145,7 +145,7 @@ export class AppComponent implements OnInit, OnDestroy {
 }
 ```
 
-#### Rosource List Model
+#### List Model
 
 ```typescript
 export class ResourceModel {
@@ -169,7 +169,7 @@ export class ResourceModel {
 }
 ```
 
-#### Rosource Body Request Model
+#### Body Request Model
 
 ```typescript
 export class ResourceReqModel {
@@ -191,7 +191,7 @@ export class ResourceReqModel {
 
 ### Icon Service
 
-#### component.ts
+#### Component
 
 ```typescript
 import { IconService } from '@adl/angular-ui';
@@ -204,7 +204,7 @@ constructor(private iconService: IconService) {
 }
 ```
 
-#### iconLists.ts (assets/svg/IconsList.ts)
+#### Const File (assets/svg/IconsList.ts)
 
 ```typescript
 export const IconsList: { name: string; location: string }[] = [

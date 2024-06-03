@@ -56,7 +56,7 @@ export class AppModule {}
 
 ### Confirmation UI Component
 
-#### html
+#### HTML
 
 ```html
 <adl-ui-button
@@ -68,7 +68,7 @@ export class AppModule {}
 	(click)="openDialog()"></adl-ui-button>
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 import { MatDialog } from '@angular/material/dialog';

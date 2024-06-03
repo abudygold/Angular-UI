@@ -61,7 +61,7 @@ export class AppModule {}
 
 ### Input Currency
 
-#### html
+#### HTML
 
 ```html
 <mat-form-field appearance="outline">
@@ -74,7 +74,7 @@ export class AppModule {}
 </mat-form-field>
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
 
 ### Only Number
 
-#### html
+#### HTML
 
 ```html
 <mat-form-field appearance="outline">
@@ -106,7 +106,7 @@ export class AppComponent implements OnInit {
 </mat-form-field>
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
@@ -125,7 +125,7 @@ export class AppComponent implements OnInit {
 
 ### Remove Space
 
-#### html
+#### HTML
 
 ```html
 <mat-form-field appearance="outline">
@@ -138,7 +138,7 @@ export class AppComponent implements OnInit {
 </mat-form-field>
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 import { Component, OnInit } from '@angular/core';

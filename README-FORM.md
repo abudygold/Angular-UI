@@ -56,7 +56,7 @@ export class AppModule {}
 
 ### Form UI Component
 
-#### html
+#### HTML
 
 ```html
 <adl-ui-input-text
@@ -171,7 +171,7 @@ export class AppModule {}
 	(click)="onSave()"></adl-ui-button>
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 import { SAMPLE_FORM_CONST} from './app-config.const';
@@ -202,7 +202,7 @@ onSave(): void {
 ...
 ```
 
-#### const.ts
+#### Const File
 
 ```typescript
 /* Form  */

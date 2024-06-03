@@ -56,7 +56,7 @@ export class AppModule {}
 
 ### Search UI Component
 
-#### html
+#### HTML
 
 ```html
 <adl-ui-search
@@ -66,7 +66,7 @@ export class AppModule {}
 	(searchValue)="onSearch($event)"></adl-ui-search>
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 ...
@@ -80,7 +80,7 @@ onSearch(e: any): void {
 
 ### Button UI Component
 
-#### html
+#### HTML
 
 ```html
 <adl-ui-button

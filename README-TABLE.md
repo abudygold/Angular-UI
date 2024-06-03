@@ -56,13 +56,13 @@ export class AppModule {}
 
 ### Table UI Component
 
-#### html
+#### HTML
 
 ```html
 <adl-ui-table *ngIf="table" [table]="table"></adl-ui-table>
 ```
 
-#### component.ts
+#### Component
 
 ```typescript
 import { BaseService, TableModel } from '@adl/angular-ui';
@@ -105,7 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
 }
 ```
 
-#### const.ts
+#### Const File
 
 ```typescript
 import { TableModel } from '@adl/angular-ui';
