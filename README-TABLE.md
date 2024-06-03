@@ -78,7 +78,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 
 import { UNICORN_PATH_CONST, TABLE_USER_CONST } from './app-config.const';
-import { CommentModel, CommentReqModel } from './shared/model';
+import { CommentModel } from './shared/model';
 
 @Component({
 	selector: 'app-root',
@@ -117,48 +117,6 @@ export class AppComponent implements OnInit, OnDestroy {
 					this.isLoading = false;
 				},
 				error: () => (this.isLoading = false),
-			});
-
-		this.subscribers.push(subs);
-	}
-
-	private createUnicornService(): void {
-		const bodyReq = new CommentReqModel(
-			'John Doe',
-			'john-doe@example.com',
-			'lorem ipsum'
-		);
-
-		const subs = this.baseService
-			.postData(UNICORN_PATH_CONST, bodyReq)
-			.subscribe(() => {
-				// Write code here
-			});
-
-		this.subscribers.push(subs);
-	}
-
-	private updateUnicornService(): void {
-		const bodyReq = new CommentReqModel(
-			'John Doe',
-			'john-doe@example.com',
-			'lorem ipsum'
-		);
-
-		const subs = this.baseService
-			.putData(UNICORN_PATH_CONST + '/:id', bodyReq)
-			.subscribe(() => {
-				// Write code here
-			});
-
-		this.subscribers.push(subs);
-	}
-
-	private deleteUnicornService(): void {
-		const subs = this.baseService
-			.deleteData(UNICORN_PATH_CONST + '/:id', null)
-			.subscribe(() => {
-				// Write code here
 			});
 
 		this.subscribers.push(subs);

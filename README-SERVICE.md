@@ -59,8 +59,8 @@ export class AppModule {}
 #### Const File
 
 ```typescript
-export const RESOURCE_PATH_CONST =
-	'https://crudcrud.com/api/b5bee03bb615487a8c54290a5eaf09cf';
+export const UNICORN_PATH_CONST =
+	'https://jsonplaceholder.typicode.com/comments';
 ```
 
 #### Component
@@ -71,9 +71,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import { RESOURCE_PATH_CONST } from './app-config.const';
-import { ResourceModel } from './shared/model';
-import { ResourceReqModel } from './shared/model/resouce-req.model';
+import { UNICORN_PATH_CONST } from './app-config.const';
+import { CommentModel, CommentReqModel } from './shared/model';
 
 @Component({
 	selector: 'app-root',
@@ -86,24 +85,33 @@ export class AppComponent implements OnInit, OnDestroy {
 	constructor(private baseService: BaseService) {}
 
 	ngOnInit(): void {
-		this.getResourceListService();
+		this.getUnicornListService();
 	}
 
-	private getResourceListService(): void {
+	private getUnicornListService(): void {
+		this.isLoading = true;
+
 		const subs = this.baseService
-			.getPagingData(RESOURCE_PATH_CONST + '/unicorns', ResourceModel)
-			.subscribe((resp) => {
-				this.table.dataSource = resp?.data ?? null;
+			.getPagingData(UNICORN_PATH_CONST, CommentModel, this.unicornParam)
+			.subscribe({
+				next: (resp) => {
+					this.table.dataSource = resp?.data ?? null;
+				},
+				error: () => (this.isLoading = false),
 			});
 
 		this.subscribers.push(subs);
 	}
 
-	private createResourceService(): void {
-		const bodyReq = new ResourceReqModel('Test', 10, 'blue');
+	private createUnicornService(): void {
+		const bodyReq = new CommentReqModel(
+			'John Doe',
+			'john-doe@example.com',
+			'lorem ipsum'
+		);
 
 		const subs = this.baseService
-			.postData(RESOURCE_PATH_CONST + '/unicorns', bodyReq)
+			.postData(UNICORN_PATH_CONST, bodyReq)
 			.subscribe(() => {
 				// Write code here
 			});
@@ -111,14 +119,15 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.subscribers.push(subs);
 	}
 
-	private updateResourceService(): void {
-		const bodyReq = new ResourceReqModel('Test 20', 20, 'Orange');
+	private updateUnicornService(): void {
+		const bodyReq = new CommentReqModel(
+			'John Doe',
+			'john-doe@example.com',
+			'lorem ipsum'
+		);
 
 		const subs = this.baseService
-			.putData(
-				RESOURCE_PATH_CONST + '/unicorns/6659974519f3e403e81e18a6',
-				bodyReq
-			)
+			.putData(UNICORN_PATH_CONST + '/:id', bodyReq)
 			.subscribe(() => {
 				// Write code here
 			});
@@ -126,12 +135,9 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.subscribers.push(subs);
 	}
 
-	private deleteResourceService(): void {
+	private deleteUnicornService(): void {
 		const subs = this.baseService
-			.deleteData(
-				RESOURCE_PATH_CONST + '/unicorns/6659974519f3e403e81e18a6',
-				null
-			)
+			.deleteData(UNICORN_PATH_CONST + '/:id', null)
 			.subscribe(() => {
 				// Write code here
 			});
