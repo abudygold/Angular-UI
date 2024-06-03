@@ -66,6 +66,10 @@ import { TableComponent } from './component/table';
 		SelectComponent,
 		CheckboxComponent,
 		RadioComponent,
+		InputCurrencyDirective,
+		OnlyNumberDirective,
+		EmptySpaceDirective,
+		RupiahPipe,
 	],
 })
 export class AdlLibModule {}

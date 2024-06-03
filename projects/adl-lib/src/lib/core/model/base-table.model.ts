@@ -4,8 +4,13 @@ export class TableModel {
 	public dataSource: MatTableDataSource<any>;
 	public columns: {
 		column: string;
-		type: 'string' | 'number' | 'date' | 'currency' | 'rupiah';
+		type: 'string' | 'number' | 'date' | 'currency' | 'rupiah' | 'actions';
 		formatDate?: string;
+		actions?: {
+			name: string;
+			filePath: string;
+			tooltips: string;
+		}[];
 		currencyOptions?: {
 			code: string;
 			symbol?: {
@@ -18,6 +23,7 @@ export class TableModel {
 	public page: number;
 	public pageSize: number;
 	public totalData: number;
+	public isPagination: boolean;
 	public pageSizeOptions: number[];
 
 	constructor() {
@@ -27,6 +33,7 @@ export class TableModel {
 		this.page = 1;
 		this.pageSize = 10;
 		this.totalData = 0;
+		this.isPagination = false;
 		this.pageSizeOptions = [10, 25, 100];
 	}
 

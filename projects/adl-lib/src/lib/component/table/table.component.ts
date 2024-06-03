@@ -4,9 +4,12 @@ import {
 	AfterViewInit,
 	Input,
 	OnInit,
+	Output,
+	EventEmitter,
 } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+
 import { TableModel } from '../../core/model';
 
 @Component({
@@ -44,6 +47,16 @@ import { TableModel } from '../../core/model';
 					<ng-container *ngIf="item.type === 'date'">
 						{{ row[item.column] | date: item.formatDate }}
 					</ng-container>
+					<ng-container *ngIf="item.type === 'actions'">
+						<div style="display: flex; gap: 1rem;cursor: pointer">
+							<img
+								*ngFor="let action of item.actions"
+								[src]="action.filePath"
+								[alt]="action.tooltips"
+								(click)="actionClicked.emit({ action: action.name, row })"
+								style="width: 24px; height: 24px;" />
+						</div>
+					</ng-container>
 				</td>
 			</ng-container>
 
@@ -51,7 +64,13 @@ import { TableModel } from '../../core/model';
 			<tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
 		</table>
 
-		<mat-paginator [pageSizeOptions]="table.pageSizeOptions"></mat-paginator>`,
+		<mat-paginator
+			*ngIf="table.isPagination"
+			[length]="table.totalData"
+			[pageSize]="table.pageSize"
+			[pageIndex]="table.getPageIndex()"
+			[pageSizeOptions]="table.pageSizeOptions"
+			(page)="onClickPage($event)"></mat-paginator>`,
 })
 export class TableComponent implements OnInit, AfterViewInit {
 	public displayColumns!: string[];
@@ -62,8 +81,15 @@ export class TableComponent implements OnInit, AfterViewInit {
 	@ViewChild(MatSort) sort!: MatSort;
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 
+	@Output()
+	public pagination: EventEmitter<PageEvent> = new EventEmitter();
+
+	@Output()
+	public actionClicked: EventEmitter<{ action: string; row: any }> =
+		new EventEmitter();
+
 	ngOnInit(): void {
-		this.displayColumns = this.table.columns.map(t => t.column);
+		this.displayColumns = this.table.columns.map((t) => t.column);
 	}
 
 	ngAfterViewInit() {
@@ -75,8 +101,13 @@ export class TableComponent implements OnInit, AfterViewInit {
 		const filterValue = (event.target as HTMLInputElement).value;
 		this.table.dataSource.filter = filterValue.trim().toLowerCase();
 
-		if (this.table.dataSource.paginator) {
+		if (this.table.dataSource.paginator)
 			this.table.dataSource.paginator.firstPage();
-		}
+	}
+
+	onClickPage(pageEvent: PageEvent): void {
+		if (!pageEvent) return;
+
+		this.pagination.emit(pageEvent);
 	}
 }

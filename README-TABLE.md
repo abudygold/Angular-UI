@@ -62,7 +62,8 @@ export class AppModule {}
 <ng-container *ngIf="!isLoading; else loadingTemplate">
 	<adl-ui-table
 		[table]="table"
-		(pagination)="onUpdatePage($event)"></adl-ui-table>
+		(pagination)="onUpdatePage($event)"
+		(actionClicked)="onActionClicked($event)"></adl-ui-table>
 </ng-container>
 
 <ng-template #loadingTemplate> Please wait... </ng-template>
@@ -106,14 +107,18 @@ export class AppComponent implements OnInit, OnDestroy {
 			.getPagingData(UNICORN_PATH_CONST, CommentModel, this.unicornParam)
 			.subscribe({
 				next: (resp) => {
-					/* Slice data same with the pageSize */
+					/* Pagination: Client Side */
 					const start =
 						this.table.pageSize * this.table.page - this.table.pageSize;
 					const end = this.table.pageSize * this.table.page;
 
 					this.table.dataSource = resp?.data?.slice(start, end) ?? null;
 					this.table.totalData = resp?.data?.length;
-					/* ./ Slice data same with the pageSize */
+					/* ./ Pagination: Client Side */
+					/* Pagination: Server Side */
+					/* this.table.dataSource = resp?.data ?? null;
+					this.table.totalData = resp?.data?.length; */
+					/* ./ Pagination: Server Side */
 					this.isLoading = false;
 				},
 				error: () => (this.isLoading = false),
@@ -131,6 +136,10 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.getUnicornListService();
 	}
 
+	onActionClicked(e: { action: string; row: any }): void {
+		console.log(e);
+	}
+
 	ngOnDestroy(): void {
 		this.subscribers.forEach((each) => each.unsubscribe());
 	}
@@ -143,9 +152,10 @@ export class AppComponent implements OnInit, OnDestroy {
 import { TableModel } from '@adl/angular-ui';
 
 /* Table  */
+
 const TableConfig = new TableModel();
 TableConfig.isPagination = true;
-TableConfig.labels = ['ID', 'Name', 'Email', 'Body'];
+TableConfig.labels = ['ID', 'Name', 'Email', 'Body', 'Actions'];
 TableConfig.columns = [
 	{
 		column: 'id',
@@ -162,6 +172,27 @@ TableConfig.columns = [
 	{
 		column: 'body',
 		type: 'string',
+	},
+	{
+		column: 'actions',
+		type: 'actions',
+		actions: [
+			{
+				name: 'preview',
+				filePath: './assets/svg/preview.svg',
+				tooltips: 'Preview Icon',
+			},
+			{
+				name: 'edit',
+				filePath: './assets/svg/edit.svg',
+				tooltips: 'Edit Icon',
+			},
+			{
+				name: 'delete',
+				filePath: './assets/svg/delete.svg',
+				tooltips: 'Delete Icon',
+			},
+		],
 	},
 ];
 /* ./ Table  */

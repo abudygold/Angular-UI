@@ -226,8 +226,13 @@ export class TableModel {
 	public dataSource: MatTableDataSource<any>;
 	public columns: {
 		column: string;
-		type: 'string' | 'number' | 'date' | 'currency' | 'rupiah';
+		type: 'string' | 'number' | 'date' | 'currency' | 'rupiah' | 'actions';
 		formatDate?: string;
+		actions?: {
+			name: string;
+			filePath: string;
+			tooltips: string;
+		}[];
 		currencyOptions?: {
 			code: string;
 			symbol?: {
