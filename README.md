@@ -18,7 +18,7 @@
   - [Only Number](https://github.com/abudygold/Angular-UI/blob/main/README-DIRECTIVE.md#only-number)
   - [Remove Space](https://github.com/abudygold/Angular-UI/blob/main/README-DIRECTIVE.md#remove-space)
 - Pipe
-  - Currency (Rupiah)
+  - [Currency (Rupiah)](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#currency)
 - Base Model
   - HTTP Body Request Pagination Model
   - HTTP Body Request Pagination with Filter Model
@@ -96,4 +96,12 @@ onSearch(e: any): void {
         color: 'primary',
         name: 'Batal'
     }"></adl-ui-button>
+```
+
+### Currency (Rupiah)
+
+#### HTML
+
+```html
+<p>{{ 100000 | rupiah }}</p>
 ```
