@@ -240,6 +240,7 @@ export class TableModel {
 	public page: number;
 	public pageSize: number;
 	public totalData: number;
+	public isPagination: boolean;
 	public pageSizeOptions: number[];
 
 	constructor() {
@@ -249,6 +250,7 @@ export class TableModel {
 		this.page = 1;
 		this.pageSize = 10;
 		this.totalData = 0;
+		this.isPagination = false;
 		this.pageSizeOptions = [10, 25, 100];
 	}
 

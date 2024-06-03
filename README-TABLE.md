@@ -59,19 +59,26 @@ export class AppModule {}
 #### HTML
 
 ```html
-<adl-ui-table *ngIf="table" [table]="table"></adl-ui-table>
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+	<adl-ui-table
+		[table]="table"
+		(pagination)="onUpdatePage($event)"></adl-ui-table>
+</ng-container>
+
+<ng-template #loadingTemplate> Please wait... </ng-template>
 ```
 
 #### Component
 
 ```typescript
-import { BaseService, TableModel } from '@adl/angular-ui';
+import { BaseParamReqModel, BaseService, TableModel } from '@adl/angular-ui';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 
 import { Subscription } from 'rxjs';
 
-import { TABLE_USER_CONST } from './app-config.const';
-import { ResourceModel } from './shared/model';
+import { UNICORN_PATH_CONST, TABLE_USER_CONST } from './app-config.const';
+import { CommentModel, CommentReqModel } from './shared/model';
 
 @Component({
 	selector: 'app-root',
@@ -80,23 +87,90 @@ import { ResourceModel } from './shared/model';
 })
 export class AppComponent implements OnInit, OnDestroy {
 	public table: TableModel = TABLE_USER_CONST;
+	public isLoading: boolean = false;
 
+	private unicornParam!: BaseParamReqModel;
 	private subscribers: Subscription[] = [];
 
 	constructor(private baseService: BaseService) {}
 
 	ngOnInit(): void {
+		this.unicornParam = new BaseParamReqModel();
 		this.getUnicornListService();
 	}
 
 	private getUnicornListService(): void {
+		this.isLoading = true;
+
 		const subs = this.baseService
-			.getPagingData(RESOURCE_PATH_CONST + '/unicorns', ResourceModel)
-			.subscribe((resp) => {
-				this.table.dataSource = resp?.data ?? null;
+			.getPagingData(UNICORN_PATH_CONST, CommentModel, this.unicornParam)
+			.subscribe({
+				next: (resp) => {
+					/* Slice data same with the pageSize */
+					const start =
+						this.table.pageSize * this.table.page - this.table.pageSize;
+					const end = this.table.pageSize * this.table.page;
+
+					this.table.dataSource = resp?.data?.slice(start, end) ?? null;
+					this.table.totalData = resp?.data?.length;
+					/* ./ Slice data same with the pageSize */
+					this.isLoading = false;
+				},
+				error: () => (this.isLoading = false),
 			});
 
 		this.subscribers.push(subs);
+	}
+
+	private createUnicornService(): void {
+		const bodyReq = new CommentReqModel(
+			'John Doe',
+			'john-doe@example.com',
+			'lorem ipsum'
+		);
+
+		const subs = this.baseService
+			.postData(UNICORN_PATH_CONST, bodyReq)
+			.subscribe(() => {
+				// Write code here
+			});
+
+		this.subscribers.push(subs);
+	}
+
+	private updateUnicornService(): void {
+		const bodyReq = new CommentReqModel(
+			'John Doe',
+			'john-doe@example.com',
+			'lorem ipsum'
+		);
+
+		const subs = this.baseService
+			.putData(UNICORN_PATH_CONST + '/:id', bodyReq)
+			.subscribe(() => {
+				// Write code here
+			});
+
+		this.subscribers.push(subs);
+	}
+
+	private deleteUnicornService(): void {
+		const subs = this.baseService
+			.deleteData(UNICORN_PATH_CONST + '/:id', null)
+			.subscribe(() => {
+				// Write code here
+			});
+
+		this.subscribers.push(subs);
+	}
+
+	onUpdatePage(page: PageEvent): void {
+		this.table.page =
+			this.table.pageSize === page?.pageSize ? page?.pageIndex + 1 : 1;
+		this.table.pageSize = page?.pageSize;
+		this.unicornParam.pageNo = this.table.page;
+		this.unicornParam.pageSize = this.table.pageSize;
+		this.getUnicornListService();
 	}
 
 	ngOnDestroy(): void {
@@ -112,7 +186,8 @@ import { TableModel } from '@adl/angular-ui';
 
 /* Table  */
 const TableConfig = new TableModel();
-TableConfig.labels = ['ID', 'Name', 'Age', 'Colour'];
+TableConfig.isPagination = true;
+TableConfig.labels = ['ID', 'Name', 'Email', 'Body'];
 TableConfig.columns = [
 	{
 		column: 'id',
@@ -123,15 +198,17 @@ TableConfig.columns = [
 		type: 'string',
 	},
 	{
-		column: 'age',
-		type: 'number',
+		column: 'email',
+		type: 'string',
 	},
 	{
-		column: 'colour',
+		column: 'body',
 		type: 'string',
 	},
 ];
 /* ./ Table  */
 
 export const TABLE_USER_CONST = TableConfig;
+export const RESOURCE_PATH_CONST =
+	'https://jsonplaceholder.typicode.com/comments';
 ```
