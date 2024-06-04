@@ -238,3 +238,283 @@ const SampleForm = {
 
 export const SAMPLE_FORM_CONST = SampleForm;
 ```
+
+### Input Text, Dropdown, Checkbox, and Radio Button
+
+#### HTML
+
+```html
+<div class="container mt-4">
+	<h1 class="text-center text-uppercase font-weight-bold mb-4">--- Form ---</h1>
+
+	<div class="mb-3">
+		<adl-ui-input-text
+			[options]="{
+				label: 'Full Name',
+				appearance: 'outline',
+				matPrefix: {
+					icon: 'person',
+				},
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.fullName.validators,
+						message: formValidator.fullName.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'fullName')"></adl-ui-input-text>
+	</div>
+
+	<div class="mb-3">
+		<adl-ui-input-text
+			[options]="{
+				label: 'Body',
+				appearance: 'outline',
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.body.validators,
+						message: formValidator.body.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'body')"></adl-ui-input-text>
+	</div>
+
+	<div class="mb-3">
+		<adl-ui-select
+			[options]="{
+				label: 'Gender',
+				appearance: 'outline',
+				selectOptions: {
+					label: 'label',
+					value: 'value',
+					data: [
+						{
+							label: 'Men',
+							value: 'men',
+						},
+						{
+							label: 'Women',
+							value: 'women',
+						},
+					],
+				},
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.gender.validators,
+						message: formValidator.gender.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'gender')"></adl-ui-select>
+	</div>
+
+	<div class="mb-3">
+		<adl-ui-radio
+			[options]="{
+				label: 'Gender:',
+				checkbox: {
+					data: [
+						{
+							label: 'Men',
+							value: 'men',
+						},
+						{
+							label: 'Women',
+							value: 'women',
+						},
+					],
+				},
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.gender.validators,
+						message: formValidator.gender.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'genderRadio')"></adl-ui-radio>
+	</div>
+
+	<div class="mb-3">
+		<adl-ui-checkbox
+			[options]="{
+				label: 'Your Hobby:',
+				checkbox: {
+					data: [
+						{
+							label: 'Reading a book',
+							value: 'read_a_book',
+						},
+						{
+							label: 'Playing Football',
+							value: 'football',
+						},
+						{
+							label: 'Swimming',
+							value: 'swimming',
+							disabled: true,
+						},
+					],
+					isVertical: true,
+				},
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.hobby.validators,
+						message: formValidator.hobby.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueChecked($event, 'hobby')"></adl-ui-checkbox>
+	</div>
+
+	<div class="d-flex gap-3 mb-3">
+		<adl-ui-button
+			[options]="{
+				variant: 'flat',
+				color: 'primary',
+				name: 'Simpan',
+				disabled: isSubmit,
+			}"
+			(click)="onSave()"></adl-ui-button>
+
+		<adl-ui-button
+			[options]="{
+				variant: 'stroked',
+				color: 'primary',
+				name: 'Batal',
+				disabled: isSubmit,
+			}"></adl-ui-button>
+	</div>
+</div>
+```
+
+#### HTML
+
+```typescript
+import { BaseService, CheckboxModel } from '@adl/angular-ui';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { Subscription } from 'rxjs';
+
+import { COMMENT_PATH_CONST, SAMPLE_FORM_CONST } from './app-config.const';
+import { CommentReqModel } from './shared/model';
+
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+})
+export class AppComponent implements OnInit, OnDestroy {
+	public formValidator: any = SAMPLE_FORM_CONST;
+	public isSubmit: boolean = false;
+	public form!: FormGroup;
+
+	private subscribers: Subscription[] = [];
+
+	constructor(private baseService: BaseService) {}
+
+	ngOnInit(): void {
+		this.initForm();
+	}
+
+	private initForm(): void {
+		this.form = new FormGroup({
+			fullName: new FormControl(null, Validators.required),
+			email: new FormControl(null, [Validators.required, Validators.email]),
+			body: new FormControl(null, Validators.required),
+			gender: new FormControl(null, Validators.required),
+			genderRadio: new FormControl(null, Validators.required),
+			hobby: new FormControl(null, Validators.required),
+		});
+	}
+
+	private createUnicornService(): void {
+		const bodyReq = new CommentReqModel(this.form.getRawValue());
+
+		const subs = this.baseService
+			.postData(COMMENT_PATH_CONST, bodyReq)
+			.subscribe({
+				next: () => (this.isSubmit = false),
+				error: () => (this.isSubmit = false),
+			});
+
+		this.subscribers.push(subs);
+	}
+
+	setValueField(value: any, control: string): void {
+		this.form.get(control)?.setValue(value);
+	}
+
+	setValueChecked(options: CheckboxModel[], control: string): void {
+		this.form
+			.get(control)
+			?.setValue(options.filter((t: CheckboxModel) => t.checked));
+	}
+
+	onSave(): void {
+		this.form.markAllAsTouched();
+		this.isSubmit = true;
+
+		if (!this.form.valid) {
+			setTimeout(() => (this.isSubmit = false));
+			return;
+		}
+
+		this.createUnicornService();
+	}
+
+	ngOnDestroy(): void {
+		this.subscribers.forEach((each) => each.unsubscribe());
+	}
+}
+```
+
+#### Const File
+
+```typescript
+/* Form  */
+import { Validators } from '@angular/forms';
+
+/* Form  */
+const SampleForm = {
+	fullName: {
+		validators: [Validators.required],
+		validationMessages: [
+			{ type: 'required', message: 'Full name is required' },
+		],
+	},
+	email: {
+		validators: [Validators.required, Validators.email],
+		validationMessages: [
+			{ type: 'required', message: 'Email is required' },
+			{ type: 'email', message: "Email format doesn't correct" },
+		],
+	},
+	body: {
+		validators: [Validators.required],
+		validationMessages: [{ type: 'required', message: 'Body is required' }],
+	},
+	gender: {
+		validators: [Validators.required],
+		validationMessages: [{ type: 'required', message: 'Gender is required' }],
+	},
+	hobby: {
+		validators: [Validators.required],
+		validationMessages: [{ type: 'required', message: 'Hobby is required' }],
+	},
+};
+/* ./ Form  */
+
+export const SAMPLE_FORM_CONST = SampleForm;
+```
