@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { FormComponent } from '../../core/common';
 
 @Component({
@@ -81,7 +82,11 @@ import { FormComponent } from '../../core/common';
 		<mat-error
 			align="end"
 			*ngFor="let validation of options.field?.validation?.message">
-			<p *ngIf="form.touched && form.hasError(validation.type)">
+			<p
+				[ngStyle]="{
+					display:
+						form.touched && form.hasError(validation.type) ? 'inherit' : 'none'
+				}">
 				{{ validation.message }}
 			</p>
 		</mat-error>

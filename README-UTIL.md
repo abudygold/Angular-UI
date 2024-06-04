@@ -60,15 +60,25 @@ export class AppModule {}
 
 ```typescript
 import { generateHttpParams } from '@adl/angular-ui';
+import { Component, OnInit } from '@angular/core';
 
-...
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+})
+export class AppComponent implements OnInit {
+	constructor() {}
 
-ngOnInit(): void {
-	generateHttpParams({
-		firstName: 'john',
-		lastName: 'doe',
-	}).toString();
-	/* Output: firstName=john&lastName=doe */
+	ngOnInit(): void {
+		/* Output: firstName=john&lastName=doe */
+		console.log(
+			generateHttpParams({
+				firstName: 'john',
+				lastName: 'doe',
+			}).toString()
+		);
+	}
 }
 ```
 
@@ -77,28 +87,33 @@ ngOnInit(): void {
 #### Component
 
 ```typescript
-import { generateEnumOption } from '@adl/angular-ui';
+import { generateHttpParams } from '@adl/angular-ui';
+import { Component, OnInit } from '@angular/core';
+
 import { ACTIVE_ENUM } from './app-config.const';
 
-...
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+})
+export class AppComponent implements OnInit {
+	constructor() {}
 
-public activeOption: BaseOptionModel[] = [];
-
-...
-
-ngOnInit(): void {
-	this.activeOption = generateEnumOption(ACTIVE_ENUM);
-	/* Output: [
-		{
-			"label": " Active",
-			"value": 0
-		},
-		{
-			"label": " Deactivate",
-			"value": 1
-		}
-	]
-	*/
+	ngOnInit(): void {
+		this.activeOption = generateEnumOption(ACTIVE_ENUM);
+		/* Output: [
+				{
+					"label": " Active",
+					"value": 0
+				},
+				{
+					"label": " Deactivate",
+					"value": 1
+				}
+			]
+		*/
+	}
 }
 ```
 

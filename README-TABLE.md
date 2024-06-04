@@ -59,14 +59,22 @@ export class AppModule {}
 #### HTML
 
 ```html
-<ng-container *ngIf="!isLoading; else loadingTemplate">
-	<adl-ui-table
-		[table]="table"
-		(pagination)="onUpdatePage($event)"
-		(actionClicked)="onActionClicked($event)"></adl-ui-table>
-</ng-container>
+<div class="container">
+	<adl-ui-search
+		[options]="{
+			placeholder: 'Search',
+		}"
+		(searchValue)="onSearch($event)"></adl-ui-search>
 
-<ng-template #loadingTemplate> Please wait... </ng-template>
+	<ng-container *ngIf="!isLoading; else loadingTemplate">
+		<adl-ui-table
+			[table]="table"
+			(pagination)="onUpdatePage($event)"
+			(actionClicked)="onActionClicked($event)"></adl-ui-table>
+	</ng-container>
+
+	<ng-template #loadingTemplate> Please wait... </ng-template>
+</div>
 ```
 
 #### Component
@@ -78,7 +86,7 @@ import { PageEvent } from '@angular/material/paginator';
 
 import { Subscription } from 'rxjs';
 
-import { UNICORN_PATH_CONST, TABLE_USER_CONST } from './app-config.const';
+import { COMMENT_PATH_CONST, TABLE_USER_CONST } from './app-config.const';
 import { CommentModel } from './shared/model';
 
 @Component({
@@ -97,34 +105,36 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.unicornParam = new BaseParamReqModel();
-		this.getUnicornListService();
 	}
 
 	private getUnicornListService(): void {
 		this.isLoading = true;
 
 		const subs = this.baseService
-			.getPagingData(UNICORN_PATH_CONST, CommentModel, this.unicornParam)
+			.getPagingData(COMMENT_PATH_CONST, CommentModel, this.unicornParam)
 			.subscribe({
 				next: (resp) => {
-					/* Pagination: Client Side */
+					/* Pagination: Dummy Data for Client Side */
 					const start =
 						this.table.pageSize * this.table.page - this.table.pageSize;
 					const end = this.table.pageSize * this.table.page;
 
 					this.table.dataSource = resp?.data?.slice(start, end) ?? null;
 					this.table.totalData = resp?.data?.length;
-					/* ./ Pagination: Client Side */
+
 					/* Pagination: Server Side */
 					/* this.table.dataSource = resp?.data ?? null;
 					this.table.totalData = resp?.data?.length; */
-					/* ./ Pagination: Server Side */
 					this.isLoading = false;
 				},
 				error: () => (this.isLoading = false),
 			});
 
 		this.subscribers.push(subs);
+	}
+
+	onSearch(txtInput: any): void {
+		console.log(txtInput);
 	}
 
 	onUpdatePage(page: PageEvent): void {
@@ -136,8 +146,14 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.getUnicornListService();
 	}
 
-	onActionClicked(e: { action: string; row: any }): void {
-		console.log(e);
+	onActionClicked(event: { action: string; row: any }): void {
+		if (event.action === 'delete') this.deleteUnicornService();
+		else if (event.action === 'preview')
+			console.log('Write code here for preview data');
+		else if (event.action === 'edit')
+			console.log(
+				'Redirect to the edit form page or open the edit form dialog'
+			);
 	}
 
 	ngOnDestroy(): void {
@@ -152,7 +168,6 @@ export class AppComponent implements OnInit, OnDestroy {
 import { TableModel } from '@adl/angular-ui';
 
 /* Table  */
-
 const TableConfig = new TableModel();
 TableConfig.isPagination = true;
 TableConfig.labels = ['ID', 'Name', 'Email', 'Body', 'Actions'];
@@ -195,9 +210,11 @@ TableConfig.columns = [
 		],
 	},
 ];
+
+export const TABLE_USER_CONST = TableConfig;
 /* ./ Table  */
 
 export const TABLE_USER_CONST = TableConfig;
-export const RESOURCE_PATH_CONST =
+export const COMMENT_PATH_CONST =
 	'https://jsonplaceholder.typicode.com/comments';
 ```

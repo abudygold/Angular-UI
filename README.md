@@ -69,13 +69,9 @@ export class AppModule {}
 #### Component
 
 ```typescript
-...
-
-onSearch(e: any): void {
-    console.log(e);
+onSearch(txtInput: any): void {
+  console.log(txtInput);
 }
-
-...
 ```
 
 ### Button UI Component

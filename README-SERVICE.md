@@ -66,7 +66,7 @@ export const UNICORN_PATH_CONST =
 #### Component
 
 ```typescript
-import { BaseService } from '@adl/angular-ui';
+import { BaseParamReqModel, BaseService } from '@adl/angular-ui';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
@@ -80,11 +80,16 @@ import { CommentModel, CommentReqModel } from './shared/model';
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+	public isSubmit: boolean = false;
+	public isLoading: boolean = false;
+
+	private unicornParam!: BaseParamReqModel;
 	private subscribers: Subscription[] = [];
 
 	constructor(private baseService: BaseService) {}
 
 	ngOnInit(): void {
+		this.unicornParam = new BaseParamReqModel();
 		this.getUnicornListService();
 	}
 
@@ -95,7 +100,8 @@ export class AppComponent implements OnInit, OnDestroy {
 			.getPagingData(UNICORN_PATH_CONST, CommentModel, this.unicornParam)
 			.subscribe({
 				next: (resp) => {
-					this.table.dataSource = resp?.data ?? null;
+					// Write code here
+					this.isLoading = false;
 				},
 				error: () => (this.isLoading = false),
 			});
@@ -104,32 +110,26 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	private createUnicornService(): void {
-		const bodyReq = new CommentReqModel(
-			'John Doe',
-			'john-doe@example.com',
-			'lorem ipsum'
-		);
+		const bodyReq = new CommentReqModel(this.form.getRawValue());
 
 		const subs = this.baseService
 			.postData(UNICORN_PATH_CONST, bodyReq)
-			.subscribe(() => {
-				// Write code here
+			.subscribe({
+				next: () => (this.isSubmit = false),
+				error: () => (this.isSubmit = false),
 			});
 
 		this.subscribers.push(subs);
 	}
 
 	private updateUnicornService(): void {
-		const bodyReq = new CommentReqModel(
-			'John Doe',
-			'john-doe@example.com',
-			'lorem ipsum'
-		);
+		const bodyReq = new CommentReqModel(this.form.getRawValue());
 
 		const subs = this.baseService
 			.putData(UNICORN_PATH_CONST + '/:id', bodyReq)
-			.subscribe(() => {
-				// Write code here
+			.subscribe({
+				next: () => (this.isSubmit = false),
+				error: () => (this.isSubmit = false),
 			});
 
 		this.subscribers.push(subs);
@@ -151,42 +151,38 @@ export class AppComponent implements OnInit, OnDestroy {
 }
 ```
 
-#### List Model
+#### Comment Model
 
 ```typescript
-export class ResourceModel {
+export class CommentModel {
 	id!: string;
 	name!: string;
-	age!: number;
-	colour!: string;
+	email!: string;
+	body!: string;
 
-	convert(dto: any): ResourceModel {
-		this.id = dto._id ?? '';
+	convert(dto: any): CommentModel {
+		this.id = dto.id ?? '';
 		this.name = dto.name ?? '';
-		this.age = dto.age ?? null;
-		this.colour = dto.colour ? this.capitalizeFirstLetter(dto.colour) : '';
+		this.email = dto.email ?? null;
+		this.body = dto.body ?? '';
 
 		return this;
-	}
-
-	private capitalizeFirstLetter(str: string): string {
-		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
 }
 ```
 
-#### Body Request Model
+#### Comment Request Model
 
 ```typescript
-export class ResourceReqModel {
+export class CommentReqModel {
 	name: string;
-	age: number;
-	colour: string;
+	email: string;
+	body: string;
 
-	constructor(name: string, age: number, colour: string) {
-		this.name = name ?? '';
-		this.age = age ?? '';
-		this.colour = colour ?? '';
+	constructor(source: any) {
+		this.name = source?.fullName ?? '';
+		this.email = source?.email ?? '';
+		this.body = source?.body ?? '';
 	}
 
 	convert(): any {
@@ -201,12 +197,19 @@ export class ResourceReqModel {
 
 ```typescript
 import { IconService } from '@adl/angular-ui';
+import { Component } from '@angular/core';
+
 import { IconsList } from '../assets/svg/IconsList';
 
-...
-
-constructor(private iconService: IconService) {
-  iconService.registerIcons(IconsList);
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+	constructor(private iconService: IconService) {
+		iconService.registerIcons(IconsList);
+	}
 }
 ```
 

@@ -54,152 +54,161 @@ import { AdlLibModule } from '@adl/angular-ui';
 export class AppModule {}
 ```
 
-### Form UI Component
+### Form UI Component (Sample Form)
 
 #### HTML
 
 ```html
-<adl-ui-input-text
-	[options]="{
-        label: 'First Name',
-        appearance: 'outline',
-        field: {
-            value: 'Steven',
-            validation: {
-                validators: formValidator.firstName.validators,
-                message: formValidator.firstName.validationMessages
-            }
-        }
-    }"
-	[isSaveClicked]="isSubmit"
-	(getValue)="onSearch($event)"></adl-ui-input-text>
+<div class="container">
+	<div class="mb-3">
+		<adl-ui-input-text
+			[options]="{
+				label: 'Full Name',
+				appearance: 'outline',
+				matPrefix: {
+					icon: 'person',
+				},
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.fullName.validators,
+						message: formValidator.fullName.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'fullName')"></adl-ui-input-text>
+	</div>
 
-<adl-ui-select
-	[options]="{
-        label: 'Gender',
-        appearance: 'outline',
-        selectOptions: {
-            label: 'label',
-            value: 'value',
-            data: [
-                {
-                    label: 'Men',
-                    value: 'men'
-                },
-                {
-                    label: 'Women',
-                    value: 'women'
-                }
-            ]
-        },
-        field: {
-            value: '',
-            validation: {
-                validators: formValidator.gender.validators,
-                message: formValidator.gender.validationMessages
-            }
-        }
-    }"
-	[isSaveClicked]="isSubmit"
-	(getValue)="onSearch($event)"></adl-ui-select>
+	<div class="mb-3">
+		<adl-ui-input-text
+			[options]="{
+				label: 'Email',
+				appearance: 'outline',
+				matPrefix: {
+					icon: 'email',
+				},
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.email.validators,
+						message: formValidator.email.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'email')"></adl-ui-input-text>
+	</div>
 
-<adl-ui-radio
-	[options]="{
-        label: 'Jenis Kelamin:',
-        checkbox: {
-            data: [
-                {
-                    label: 'Laki-laki',
-                    value: 'pria'
-                },
-                {
-                    label: 'Perempuan',
-                    value: 'wanita'
-                }
-            ]
-        },
-        field: {
-            value: 'pria',
-            validation: {
-                validators: formValidator.gender.validators,
-                message: formValidator.gender.validationMessages
-            }
-        }
-    }"
-	[isSaveClicked]="isSubmit"
-	(getValue)="onChecked($event)"></adl-ui-radio>
+	<div class="mb-3">
+		<adl-ui-input-text
+			[options]="{
+				label: 'Body',
+				appearance: 'outline',
+				field: {
+					value: '',
+					validation: {
+						validators: formValidator.body.validators,
+						message: formValidator.body.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'body')"></adl-ui-input-text>
+	</div>
 
-<adl-ui-checkbox
-	[options]="{
-        label: 'Hobby Anda:',
-        checkbox: {
-            data: [
-                {
-                    label: 'Membaca Buku',
-                    value: 'baca',
-                    checked: true
-                },
-                {
-                    label: 'Bermain Sepak Bola',
-                    value: 'sepak_bola',
-                },
-                {
-                    label: 'Berenang',
-                    value: 'berenang',
-                    disabled: true
-                }
-            ],
-            isVertical: true
-        },
-        field: {
-            value: '',
-            validation: {
-                validators: formValidator.hobby.validators,
-                message: formValidator.hobby.validationMessages
-            }
-        }
-    }"
-	[isSaveClicked]="isSubmit"
-	(getValue)="onChecked($event)"></adl-ui-checkbox>
+	<div class="d-flex gap-3 mb-3">
+		<adl-ui-button
+			[options]="{
+				variant: 'flat',
+				color: 'primary',
+				name: 'Simpan',
+				disabled: isSubmit,
+			}"
+			(click)="onSave()"></adl-ui-button>
 
-<adl-ui-button
-	[options]="{
-        variant: 'flat',
-        color: 'primary',
-        name: 'Simpan'
-    }"
-	(click)="onSave()"></adl-ui-button>
+		<adl-ui-button
+			[options]="{
+				variant: 'stroked',
+				color: 'primary',
+				name: 'Batal',
+				disabled: isSubmit,
+			}"></adl-ui-button>
+	</div>
+</div>
 ```
 
 #### Component
 
 ```typescript
-import { SAMPLE_FORM_CONST} from './app-config.const';
-import { CheckboxModel } from '@adl/angular-ui';
+import { BaseService } from '@adl/angular-ui';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-...
+import { Subscription } from 'rxjs';
 
-formValidator: any = SAMPLE_FORM_CONST;
-isSubmit: boolean = false;
+import { UNICORN_PATH_CONST, SAMPLE_FORM_CONST } from './app-config.const';
+import { CommentReqModel } from './shared/model';
 
-....
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+})
+export class AppComponent implements OnInit, OnDestroy {
+	public formValidator: any = SAMPLE_FORM_CONST;
+	public isSubmit: boolean = false;
+	public form!: FormGroup;
 
-onChecked(e: any): void {
-    console.log(e);
+	private subscribers: Subscription[] = [];
+
+	constructor(private baseService: BaseService) {}
+
+	ngOnInit(): void {
+		this.initForm();
+	}
+
+	private initForm(): void {
+		this.form = new FormGroup({
+			fullName: new FormControl(null, Validators.required),
+			email: new FormControl(null, [Validators.required, Validators.email]),
+			body: new FormControl(null, Validators.required),
+		});
+	}
+
+	private createUnicornService(): void {
+		const bodyReq = new CommentReqModel(this.form.getRawValue());
+
+		const subs = this.baseService
+			.postData(UNICORN_PATH_CONST, bodyReq)
+			.subscribe({
+				next: () => (this.isSubmit = false),
+				error: () => (this.isSubmit = false),
+			});
+
+		this.subscribers.push(subs);
+	}
+
+	setValueField(value: any, control: string): void {
+		this.form.get(control)?.setValue(value);
+	}
+
+	onSave(): void {
+		this.form.markAllAsTouched();
+		this.isSubmit = true;
+
+		if (!this.form.valid) {
+			setTimeout(() => (this.isSubmit = false));
+			return;
+		}
+
+		this.createUnicornService();
+	}
+
+	ngOnDestroy(): void {
+		this.subscribers.forEach((each) => each.unsubscribe());
+	}
 }
-
-onChecked(e: CheckboxModel[]): void {
-    console.log(e.filter((t: CheckboxModel) => t.checked));
-}
-
-onSave(): void {
-    this.isSubmit = true;
-    setTimeout(() => {
-        this.isSubmit = false;
-    }, 2000);
-}
-
-...
 ```
 
 #### Const File
@@ -207,32 +216,22 @@ onSave(): void {
 ```typescript
 /* Form  */
 const SampleForm = {
-	firstName: {
-		validators: [
-			Validators.required,
-			Validators.minLength(10),
-			Validators.maxLength(30),
-		],
-		validationMessages: [
-			{ type: 'required', message: 'First name is required' },
-			{ type: 'minlength', message: 'Minimum characters: 10' },
-			{ type: 'maxlength', message: 'Maximum characters: 30' },
-		],
-	},
-	lastName: {
-		validators: [Validators.required, Validators.maxLength(30)],
-		validationMessages: [
-			{ type: 'required', message: 'Last name is required' },
-			{ type: 'maxlength', message: 'Maximum characters: 30' },
-		],
-	},
-	gender: {
+	fullName: {
 		validators: [Validators.required],
-		validationMessages: [{ type: 'required', message: 'Gender is required' }],
+		validationMessages: [
+			{ type: 'required', message: 'Full name is required' },
+		],
 	},
-	hobby: {
+	email: {
+		validators: [Validators.required, Validators.email],
+		validationMessages: [
+			{ type: 'required', message: 'Email is required' },
+			{ type: 'email', message: "Email format doesn't correct" },
+		],
+	},
+	body: {
 		validators: [Validators.required],
-		validationMessages: [{ type: 'required', message: 'Hobby is required' }],
+		validationMessages: [{ type: 'required', message: 'Body is required' }],
 	},
 };
 /* ./ Form  */

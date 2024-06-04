@@ -59,49 +59,57 @@ export class AppModule {}
 #### HTML
 
 ```html
-<adl-ui-button
-	[options]="{
-        variant: 'basic',
-        color: 'primary',
-        name: 'Open Dialog'
-    }"
-	(click)="openDialog()"></adl-ui-button>
+<div class="container">
+	<div class="d-flex gap-3 mb-3">
+		<adl-ui-button
+			[options]="{
+				variant: 'basic',
+				color: 'primary',
+				name: 'Open Dialog',
+			}"
+			(click)="openDialog()"></adl-ui-button>
+	</div>
+</div>
 ```
 
 #### Component
 
 ```typescript
-import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
-...
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+	constructor(private dialog: MatDialog) {}
 
-constructor(private dialog: MatDialog) {}
+	openDialog(): void {
+		const confirmation: IConfirmation = {
+			title: 'Test',
+			content:
+				"<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
+			submitBtn: 'Simpan',
+			cancelBtn: 'Batal',
+		};
 
-...
+		const _dialog = this.dialog.open(ConfirmationComponent, {
+			width: '500px',
+			autoFocus: false,
+			data: {
+				options: confirmation,
+			},
+		});
 
-openDialog(): void {
-    const confirmation: IConfirmation = {
-        title: 'Test',
-        content:
-            "<p>I've updated my project to Angular 16. In <code>app.module.ts</code>, I have an array of components named <code>entryComponents</code>. However, the <code>entryComponents</code> is no longer available in Angular 16. Where should I add these components to my project:</p>",
-        submitBtn: 'Simpan',
-        cancelBtn: 'Batal',
-    };
+		_dialog.componentInstance.options = confirmation;
+		_dialog.afterClosed().subscribe((resp) => {
+			if (!resp) return;
 
-    const _dialog = this.dialog.open(ConfirmationComponent, {
-        width: '500px',
-        autoFocus: false,
-        data: {
-            options: confirmation,
-        },
-    });
-
-    _dialog.componentInstance.options = confirmation;
-    _dialog.afterClosed().subscribe((resp) => {
-        if (!resp) return;
-
-        console.log(resp);
-    });
+			console.log(resp);
+		});
+	}
 }
 ```
