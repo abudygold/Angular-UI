@@ -7,7 +7,8 @@
 - Component
   - [Search UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#search-ui-component)
   - [Table UI](https://github.com/abudygold/Angular-UI/blob/main/README-TABLE.md)
-  - [Form UI](https://github.com/abudygold/Angular-UI/blob/main/README-FORM.md)
+  - [Form UI](https://github.com/abudygold/Angular-UI/blob/main/README-FORM.md#input-text-dropdown-checkbox-and-radio-button)
+    - [Sample Form](https://github.com/abudygold/Angular-UI/blob/main/README-FORM.md#form-ui-component-sample-form)
   - [Confirmation UI](https://github.com/abudygold/Angular-UI/blob/main/README-CONFIRMATION.md)
   - [Button UI](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#button-ui-component)
 - Service
