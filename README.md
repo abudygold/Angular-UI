@@ -19,7 +19,7 @@
   - [Only Number](https://github.com/abudygold/Angular-UI/blob/main/README-DIRECTIVE.md#only-number)
   - [Remove Space](https://github.com/abudygold/Angular-UI/blob/main/README-DIRECTIVE.md#remove-space)
 - Pipe
-  - [Currency (Rupiah)](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#currency-rupiah)
+  - [Currency](https://github.com/abudygold/Angular-UI?tab=readme-ov-file#currency)
 - Base Model
   - [HTTP Body Request Pagination Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#http-body-request-pagination-model)
   - [HTTP Body Request Pagination with Filter Model](https://github.com/abudygold/Angular-UI/blob/main/README-MODEL.md#http-body-request-pagination-with-filter-model)
@@ -95,10 +95,15 @@ onSearch(txtInput: any): void {
     }"></adl-ui-button>
 ```
 
-### Currency (Rupiah)
+### Currency
 
 #### HTML
 
+##### currencyIntl : COUNTRY_CODE (default: en-US) : CURRENCY_CODE (default: USD)
+
 ```html
-<p>{{ 100000 | rupiah }}</p>
+<p class="mb-3">{{ 1585000 | currencyIntl }}</p>
+<p class="mb-3">{{ 1585000 | currencyIntl: 'id-ID' : 'IDR' }}</p>
+<p class="mb-3">{{ 1585000 | currencyIntl: 'SA' : 'SAR' }}</p>
+<p class="mb-3">{{ 1585000 | currencyIntl: 'HK' : 'HKD' }}</p>
 ```
