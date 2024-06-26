@@ -4,7 +4,7 @@ export class TableModel {
 	public dataSource: MatTableDataSource<any>;
 	public columns: {
 		column: string;
-		type: 'string' | 'number' | 'date' | 'currency' | 'rupiah' | 'actions';
+		type: 'string' | 'number' | 'date' | 'currency' | 'actions';
 		formatDate?: string;
 		actions?: {
 			name: string;

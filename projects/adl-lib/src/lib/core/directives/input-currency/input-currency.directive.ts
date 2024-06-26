@@ -1,22 +1,84 @@
-import { Directive, HostListener, Self } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import {
+	Directive,
+	HostListener,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
+
+import { CurrencyIntlPipe } from '../../pipes/currency';
+import { InputNumberDirective } from '../number';
 
 @Directive({
 	selector: '[appInputCurrency]',
 })
-export class InputCurrencyDirective {
-	private nominalValue!: string;
+export class InputCurrencyDirective
+	extends InputNumberDirective
+	implements OnInit, OnDestroy, OnChanges
+{
+	@Input()
+	public countryCode!: string;
 
-	constructor(@Self() private ngControl: NgControl) {}
+	@Input()
+	public currencyCode!: string;
 
-	@HostListener('keyup', ['$event'])
-	onkeyup(event: Event) {
-		/* Transform input into number format (e.g :1000 ==> 1.000) */
-		const value = (<HTMLInputElement>event.target).value;
+	private currencyIntlPipe: CurrencyIntlPipe = new CurrencyIntlPipe();
 
-		this.nominalValue = value.toString().split('.').join('');
-		this.ngControl.control?.setValue(
-			this.nominalValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-		);
+	@HostListener('blur', [])
+	public override onBlur() {
+		super.onBlur();
+	}
+
+	@HostListener('keydown', ['$event'])
+	public override onKeyDown(event: KeyboardEvent) {
+		super.onKeyDown(event);
+	}
+
+	override ngOnInit() {
+		super.ngOnInit();
+
+		this.preventFirstNumberZero = true;
+	}
+
+	override ngOnDestroy() {
+		super.ngOnDestroy();
+	}
+
+	override ngOnChanges() {
+		super.ngOnChanges();
+	}
+
+	/**
+	 * override super.valueChange();
+	 */
+	public override valueChange() {
+		this.transformCurrencyByCountryCode();
+		this.checkMinMaxValue();
+		this.checkMinMaxDigit();
+	}
+
+	private transformCurrencyByCountryCode() {
+		const targetValue = this.currencyIntlPipe.parse(this.value);
+
+		if (+targetValue > 0) {
+			const formatedValue = this.currencyIntlPipe.transform(
+				+targetValue,
+				this.countryCode,
+				this.currencyCode
+			);
+
+			this.ngControl.control?.setValue(+targetValue, {
+				emitEvent: false,
+			});
+			this.ngControl.valueAccessor?.writeValue(formatedValue);
+		} else {
+			this.elementRef.nativeElement.value = null;
+			this.ngControl.control?.setValue(null, {
+				emitEvent: false,
+			});
+		}
+
+		this.value = targetValue;
 	}
 }

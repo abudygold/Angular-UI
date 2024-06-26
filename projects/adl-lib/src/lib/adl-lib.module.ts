@@ -16,7 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { EmptySpaceDirective } from '../lib/core/directives/empty-space';
 import { InputCurrencyDirective } from '../lib/core/directives/input-currency';
 import { OnlyNumberDirective } from '../lib/core/directives/only-number';
-import { RupiahPipe } from '../lib/core/pipes/rupiah';
+import { CurrencyIntlPipe } from '../lib/core/pipes/currency';
 import { ButtonComponent } from './component/button';
 import { CheckboxComponent } from './component/checkbox';
 import { ConfirmationComponent } from './component/confirmation';
@@ -39,7 +39,7 @@ import { TableComponent } from './component/table';
 		InputCurrencyDirective,
 		OnlyNumberDirective,
 		EmptySpaceDirective,
-		RupiahPipe,
+		CurrencyIntlPipe,
 	],
 	imports: [
 		CommonModule,
@@ -69,7 +69,7 @@ import { TableComponent } from './component/table';
 		InputCurrencyDirective,
 		OnlyNumberDirective,
 		EmptySpaceDirective,
-		RupiahPipe,
+		CurrencyIntlPipe,
 	],
 })
 export class AdlLibModule {}

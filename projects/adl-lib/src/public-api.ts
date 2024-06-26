@@ -14,8 +14,7 @@ export * from './lib/component/checkbox';
 export * from './lib/component/radio';
 
 export * from './lib/core/service';
-export * from './lib/core/pipes/rupiah';
-export * from './lib/core/directives/number';
+export * from './lib/core/pipes/currency';
 export * from './lib/core/directives/only-number';
 export * from './lib/core/directives/empty-space';
 export * from './lib/core/directives/input-currency';

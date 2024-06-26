@@ -9,6 +9,7 @@ import {
 	Self,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
+
 import { Subscription } from 'rxjs';
 
 @Directive({
@@ -16,16 +17,16 @@ import { Subscription } from 'rxjs';
 })
 export class InputNumberDirective implements OnInit, OnDestroy, OnChanges {
 	@Input()
-	private maxDigit!: number;
+	public maxDigit!: number;
 
 	@Input()
-	private minDigit!: number;
+	public minDigit!: number;
 
 	@Input()
-	private maxValue!: number;
+	public maxValue!: number;
 
 	@Input()
-	private minValue!: number;
+	public minValue!: number;
 
 	public allowComma!: boolean;
 	public preventFirstNumberZero!: boolean;
@@ -71,7 +72,7 @@ export class InputNumberDirective implements OnInit, OnDestroy, OnChanges {
 	}
 
 	ngOnDestroy() {
-		this.subscribers.forEach(each => each.unsubscribe());
+		this.subscribers.forEach((each) => each.unsubscribe());
 	}
 
 	ngOnChanges() {
@@ -81,7 +82,7 @@ export class InputNumberDirective implements OnInit, OnDestroy, OnChanges {
 	}
 
 	private setValueChange() {
-		const subs = this.ngControl.valueChanges!.subscribe(value => {
+		const subs = this.ngControl.valueChanges!.subscribe((value) => {
 			this.value = value;
 
 			this.valueChange();
@@ -164,7 +165,7 @@ export class InputNumberDirective implements OnInit, OnDestroy, OnChanges {
 	}
 
 	private checkFirstNumberZero(event: KeyboardEvent): boolean {
-		if (this.value || (!this.value.length && event.key === '0')) return true;
+		if (this.value?.length === 1 && event.key === '0') return true;
 
 		return false;
 	}

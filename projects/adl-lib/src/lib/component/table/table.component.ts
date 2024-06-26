@@ -32,9 +32,6 @@ import { TableModel } from '../../core/model';
 					<ng-container *ngIf="item.type === 'number'">
 						{{ row[item.column] | number }}
 					</ng-container>
-					<ng-container *ngIf="item.type === 'rupiah'">
-						{{ +row[item.column] | rupiah }}
-					</ng-container>
 					<ng-container *ngIf="item.type === 'currency'">
 						{{
 							+row[item.column]
