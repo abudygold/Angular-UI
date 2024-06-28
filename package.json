@@ -11,7 +11,7 @@
 	},
 	"private": true,
 	"dependencies": {
-		"@adl/angular-ui": "file:dist/adl-lib",
+		"@adlfe/angular-ui": "^1.0.0",
 		"@angular/animations": "^16.2.0",
 		"@angular/common": "^16.2.0",
 		"@angular/compiler": "^16.2.0",

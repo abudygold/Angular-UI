@@ -38,13 +38,13 @@
 ### Installation
 
 ```shell
-npm i @adl/angular-ui
+npm i @adlfe/angular-ui
 ```
 
 ### Import the Module in the Root Module
 
 ```typescript
-import { AdlLibModule } from '@adl/angular-ui';
+import { AdlLibModule } from '@adlfe/angular-ui';
 
 @NgModule({
 	imports: [
@@ -81,7 +81,7 @@ export class AppModule {}
 #### Component
 
 ```typescript
-import { BaseParamReqModel, BaseService, TableModel } from '@adl/angular-ui';
+import { BaseParamReqModel, BaseService, TableModel } from '@adlfe/angular-ui';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -166,7 +166,7 @@ export class AppComponent implements OnInit, OnDestroy {
 #### Const File
 
 ```typescript
-import { TableModel } from '@adl/angular-ui';
+import { TableModel } from '@adlfe/angular-ui';
 
 /* Table  */
 const TableConfig = new TableModel();

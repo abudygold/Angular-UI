@@ -38,13 +38,13 @@
 ### Installation
 
 ```shell
-npm i @adl/angular-ui
+npm i @adlfe/angular-ui
 ```
 
 ### Import the Module in the Root Module
 
 ```typescript
-import { AdlLibModule } from '@adl/angular-ui';
+import { AdlLibModule } from '@adlfe/angular-ui';
 
 @NgModule({
 	imports: [
@@ -69,7 +69,7 @@ import {
 	CheckboxModel,
 	TableModel,
 	BaseOptionModel,
-} from '@adl/angular-ui';
+} from '@adlfe/angular-ui';
 ```
 
 #### HTTP Body Request Pagination Model

@@ -1,5 +1,5 @@
 {
-	"name": "@adl/angular-ui",
+	"name": "@adlfe/angular-ui",
 	"version": "1.0.0",
 	"peerDependencies": {
 		"@angular/common": "^16.2.0",
@@ -9,5 +9,15 @@
 	"dependencies": {
 		"tslib": "^2.3.0"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"repository": {
+		"type": "git",
+		"url": "git@gitlab.axiatadigitallabs.com:fe-adli/angular-ui-library.git"
+	},
+	"description": "Axiata Digital Labs Indonesia Design System.",
+	"author": "abdullah.umar@axiatadigitallabs.com",
+	"license": "ISC",
+	"publishConfig": {
+		"@fe-adli:registry": "https://gitlab.axiatadigitallabs.com/api/v4/projects/6997/packages/npm/"
+	}
 }

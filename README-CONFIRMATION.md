@@ -38,13 +38,13 @@
 ### Installation
 
 ```shell
-npm i @adl/angular-ui
+npm i @adlfe/angular-ui
 ```
 
 ### Import the Module in the Root Module
 
 ```typescript
-import { AdlLibModule } from '@adl/angular-ui';
+import { AdlLibModule } from '@adlfe/angular-ui';
 
 @NgModule({
 	imports: [
@@ -76,7 +76,7 @@ export class AppModule {}
 #### Component
 
 ```typescript
-import { ConfirmationComponent, IConfirmation } from '@adl/angular-ui';
+import { ConfirmationComponent, IConfirmation } from '@adlfe/angular-ui';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 

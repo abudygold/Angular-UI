@@ -38,13 +38,13 @@
 ### Installation
 
 ```shell
-npm i @adl/angular-ui
+npm i @adlfe/angular-ui
 ```
 
 ### Import the Module in the Root Module
 
 ```typescript
-import { AdlLibModule } from '@adl/angular-ui';
+import { AdlLibModule } from '@adlfe/angular-ui';
 
 @NgModule({
 	imports: [
@@ -67,7 +67,7 @@ export const UNICORN_PATH_CONST =
 #### Component
 
 ```typescript
-import { BaseParamReqModel, BaseService } from '@adl/angular-ui';
+import { BaseParamReqModel, BaseService } from '@adlfe/angular-ui';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
@@ -197,7 +197,7 @@ export class CommentReqModel {
 #### Component
 
 ```typescript
-import { IconService } from '@adl/angular-ui';
+import { IconService } from '@adlfe/angular-ui';
 import { Component } from '@angular/core';
 
 import { IconsList } from '../assets/svg/IconsList';

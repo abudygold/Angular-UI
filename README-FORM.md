@@ -38,13 +38,13 @@
 ### Installation
 
 ```shell
-npm i @adl/angular-ui
+npm i @adlfe/angular-ui
 ```
 
 ### Import the Module in the Root Module
 
 ```typescript
-import { AdlLibModule } from '@adl/angular-ui';
+import { AdlLibModule } from '@adlfe/angular-ui';
 
 @NgModule({
 	imports: [
@@ -142,7 +142,7 @@ export class AppModule {}
 #### Component
 
 ```typescript
-import { BaseService } from '@adl/angular-ui';
+import { BaseService } from '@adlfe/angular-ui';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -402,7 +402,7 @@ export const SAMPLE_FORM_CONST = SampleForm;
 #### HTML
 
 ```typescript
-import { BaseService, CheckboxModel } from '@adl/angular-ui';
+import { BaseService, CheckboxModel } from '@adlfe/angular-ui';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 

@@ -38,13 +38,13 @@
 ### Installation
 
 ```shell
-npm i @adl/angular-ui
+npm i @adlfe/angular-ui
 ```
 
 ### Import the Module in the Root Module
 
 ```typescript
-import { AdlLibModule } from '@adl/angular-ui';
+import { AdlLibModule } from '@adlfe/angular-ui';
 
 @NgModule({
 	imports: [
@@ -60,7 +60,7 @@ export class AppModule {}
 #### Component
 
 ```typescript
-import { generateHttpParams } from '@adl/angular-ui';
+import { generateHttpParams } from '@adlfe/angular-ui';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
 #### Component
 
 ```typescript
-import { generateHttpParams } from '@adl/angular-ui';
+import { generateHttpParams } from '@adlfe/angular-ui';
 import { Component, OnInit } from '@angular/core';
 
 import { ACTIVE_ENUM } from './app-config.const';
