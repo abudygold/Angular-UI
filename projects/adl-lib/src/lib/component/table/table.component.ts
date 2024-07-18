@@ -1,3 +1,4 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
 	Component,
 	ViewChild,
@@ -8,7 +9,7 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 
 import { TableModel } from '../../core/model';
 
@@ -16,13 +17,14 @@ import { TableModel } from '../../core/model';
 	selector: 'adl-ui-table',
 	template: `<table
 			mat-table
-			matSort
+			[dataSource]="table.dataSource"
 			aria-describedby="table-ui"
-			[dataSource]="table.dataSource">
+			matSort
+			(matSortChange)="announceSortChange($event)">
 			<ng-container
 				*ngFor="let item of table.columns; let i = index"
 				[matColumnDef]="item.column">
-				<th *matHeaderCellDef [mat-sort-header]="item.column">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
 					{{ table.labels[i] }}
 				</th>
 				<td mat-cell *matCellDef="let row">
@@ -85,6 +87,8 @@ export class TableComponent implements OnInit, AfterViewInit {
 	public actionClicked: EventEmitter<{ action: string; row: any }> =
 		new EventEmitter();
 
+	constructor(private _liveAnnouncer: LiveAnnouncer) {}
+
 	ngOnInit(): void {
 		this.displayColumns = this.table.columns.map((t) => t.column);
 	}
@@ -106,5 +110,17 @@ export class TableComponent implements OnInit, AfterViewInit {
 		if (!pageEvent) return;
 
 		this.pagination.emit(pageEvent);
+	}
+
+	announceSortChange(sortState: Sort) {
+		// This example uses English messages. If your application supports
+		// multiple language, you would internationalize these strings.
+		// Furthermore, you can customize the message to add additional
+		// details about the values being sorted.
+		if (sortState.direction) {
+			this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+		} else {
+			this._liveAnnouncer.announce('Sorting cleared');
+		}
 	}
 }

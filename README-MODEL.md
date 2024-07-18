@@ -129,7 +129,7 @@ export class HttpBodyRespModel {
 	public convert(dto: any): HttpBodyRespModel {
 		this.status = dto?.status ?? null;
 		this.errorCode = dto?.errorCode ?? null;
-		this.data = Array.isArray(dto) ? dto : dto?.data ?? null;
+		this.data = dto?.data ?? dto ?? null;
 		this.code = dto?.code ?? null;
 		this.message = dto?.message ?? null;
 		this.haveNext = dto?.haveNext ?? false;
@@ -163,7 +163,7 @@ export class FormModel {
 	public label: string;
 	public id?: string;
 	public field?: {
-		value: string;
+		value: string | any[];
 		validation?: {
 			validators: any[];
 			message: any[];
@@ -172,6 +172,7 @@ export class FormModel {
 			inputCurrency?: boolean;
 			onlyNumber?: boolean;
 		};
+		isTextArea?: boolean;
 	};
 	public appearance?: 'fill' | 'outline';
 	public floatLabel?: 'always' | 'auto';
@@ -185,11 +186,13 @@ export class FormModel {
 		svgIcon?: string;
 	};
 	public hint?: string;
+	public characterLimit?: number;
 	public disabled?: boolean;
 	public selectOptions?: {
 		data: any[];
 		label: string;
 		value: string;
+		isMultiple?: boolean;
 	};
 	public checkbox?: {
 		data: CheckboxModel[];
@@ -227,7 +230,7 @@ export class TableModel {
 	public dataSource: MatTableDataSource<any>;
 	public columns: {
 		column: string;
-		type: 'string' | 'number' | 'date' | 'currency' | 'rupiah' | 'actions';
+		type: 'string' | 'number' | 'date' | 'currency' | 'actions';
 		formatDate?: string;
 		actions?: {
 			name: string;

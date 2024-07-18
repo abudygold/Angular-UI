@@ -61,20 +61,10 @@ export class AppModule {}
 
 ```html
 <div class="container">
-	<adl-ui-search
-		[options]="{
-			placeholder: 'Search',
-		}"
-		(searchValue)="onSearch($event)"></adl-ui-search>
-
-	<ng-container *ngIf="!isLoading; else loadingTemplate">
-		<adl-ui-table
-			[table]="table"
-			(pagination)="onUpdatePage($event)"
-			(actionClicked)="onActionClicked($event)"></adl-ui-table>
-	</ng-container>
-
-	<ng-template #loadingTemplate> Please wait... </ng-template>
+	<adl-ui-table
+		[table]="table"
+		(pagination)="onUpdatePage($event)"
+		(actionClicked)="onActionClicked($event)" />
 </div>
 ```
 
@@ -148,7 +138,8 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	onActionClicked(event: { action: string; row: any }): void {
-		if (event.action === 'delete') this.deleteUnicornService();
+		if (event.action === 'delete')
+			console.log('Write code here for delete data');
 		else if (event.action === 'preview')
 			console.log('Write code here for preview data');
 		else if (event.action === 'edit')

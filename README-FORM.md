@@ -106,7 +106,9 @@ export class AppModule {}
 			[options]="{
 				label: 'Body',
 				appearance: 'outline',
+				characterLimit: 250,
 				field: {
+					isTextArea: true,
 					value: '',
 					validation: {
 						validators: formValidator.body.validators,
@@ -121,20 +123,19 @@ export class AppModule {}
 	<div class="d-flex gap-3 mb-3">
 		<adl-ui-button
 			[options]="{
+				variant: 'stroked',
+				name: 'Batal',
+				disabled: isSubmit,
+			}"
+			(click)="onCancel()"></adl-ui-button>
+
+		<adl-ui-button
+			[options]="{
 				variant: 'flat',
-				color: 'primary',
 				name: 'Simpan',
 				disabled: isSubmit,
 			}"
 			(click)="onSave()"></adl-ui-button>
-
-		<adl-ui-button
-			[options]="{
-				variant: 'stroked',
-				color: 'primary',
-				name: 'Batal',
-				disabled: isSubmit,
-			}"></adl-ui-button>
 	</div>
 </div>
 ```
@@ -173,7 +174,11 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.form = new FormGroup({
 			fullName: new FormControl(null, Validators.required),
 			email: new FormControl(null, [Validators.required, Validators.email]),
-			body: new FormControl(null, Validators.required),
+			body: new FormControl(
+				null,
+				Validators.required,
+				Validators.maxLength(250)
+			),
 		});
 	}
 
@@ -231,8 +236,11 @@ const SampleForm = {
 		],
 	},
 	body: {
-		validators: [Validators.required],
-		validationMessages: [{ type: 'required', message: 'Body is required' }],
+		validators: [Validators.required, Validators.maxLength(250)],
+		validationMessages: [
+			{ type: 'required', message: 'Body is required' },
+			{ type: 'maxlength', message: 'Body can be at most 250 characters' },
+		],
 	},
 };
 /* ./ Form  */
@@ -273,7 +281,9 @@ export const SAMPLE_FORM_CONST = SampleForm;
 			[options]="{
 				label: 'Body',
 				appearance: 'outline',
+				characterLimit: 250,
 				field: {
+					isTextArea: true,
 					value: '',
 					validation: {
 						validators: formValidator.body.validators,
@@ -305,7 +315,39 @@ export const SAMPLE_FORM_CONST = SampleForm;
 					],
 				},
 				field: {
-					value: '',
+					value: 'men',
+					validation: {
+						validators: formValidator.gender.validators,
+						message: formValidator.gender.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueField($event, 'gender')"></adl-ui-select>
+	</div>
+
+	<div class="mb-3">
+		<adl-ui-select
+			[options]="{
+				label: 'Gender',
+				appearance: 'outline',
+				selectOptions: {
+					isMultiple: true,
+					label: 'label',
+					value: 'value',
+					data: [
+						{
+							label: 'Men',
+							value: 'men',
+						},
+						{
+							label: 'Women',
+							value: 'women',
+						},
+					],
+				},
+				field: {
+					value: ['men', 'women'],
 					validation: {
 						validators: formValidator.gender.validators,
 						message: formValidator.gender.validationMessages,
@@ -333,7 +375,7 @@ export const SAMPLE_FORM_CONST = SampleForm;
 					],
 				},
 				field: {
-					value: '',
+					value: 'women',
 					validation: {
 						validators: formValidator.gender.validators,
 						message: formValidator.gender.validationMessages,
@@ -361,6 +403,45 @@ export const SAMPLE_FORM_CONST = SampleForm;
 						{
 							label: 'Swimming',
 							value: 'swimming',
+							disabled: true,
+						},
+					],
+					isVertical: true,
+				},
+				field: {
+					value: 'read_a_book',
+					validation: {
+						validators: formValidator.hobby.validators,
+						message: formValidator.hobby.validationMessages,
+					},
+				},
+			}"
+			[isSaveClicked]="isSubmit"
+			(getValue)="setValueChecked($event, 'hobby')"></adl-ui-checkbox>
+	</div>
+
+	<div class="mb-3">
+		<adl-ui-checkbox
+			[options]="{
+				label: 'Your Hobby:',
+				checkbox: {
+					selectAll: {
+						label: 'Select All'
+					},
+					data: [
+						{
+							label: 'Reading a book',
+							value: 'read_a_book',
+						},
+						{
+							label: 'Playing Football',
+							value: 'football',
+							checked: true,
+						},
+						{
+							label: 'Swimming',
+							value: 'swimming',
+							checked: true,
 							disabled: true,
 						},
 					],
@@ -433,7 +514,11 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.form = new FormGroup({
 			fullName: new FormControl(null, Validators.required),
 			email: new FormControl(null, [Validators.required, Validators.email]),
-			body: new FormControl(null, Validators.required),
+			body: new FormControl(
+				null,
+				Validators.required,
+				Validators.maxLength(250)
+			),
 			gender: new FormControl(null, Validators.required),
 			genderRadio: new FormControl(null, Validators.required),
 			hobby: new FormControl(null, Validators.required),
@@ -503,8 +588,11 @@ const SampleForm = {
 		],
 	},
 	body: {
-		validators: [Validators.required],
-		validationMessages: [{ type: 'required', message: 'Body is required' }],
+		validators: [Validators.required, Validators.maxLength(250)],
+		validationMessages: [
+			{ type: 'required', message: 'Body is required' },
+			{ type: 'maxlength', message: 'Body can be at most 250 characters' },
+		],
 	},
 	gender: {
 		validators: [Validators.required],

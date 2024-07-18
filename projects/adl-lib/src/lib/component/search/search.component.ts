@@ -6,7 +6,7 @@ interface ISearch {
 
 @Component({
 	selector: 'adl-ui-search',
-	template: `<mat-form-field appearance="outline">
+	template: `<mat-form-field appearance="outline" class="search-field">
 		<mat-icon matPrefix> search </mat-icon>
 
 		<input
@@ -51,5 +51,6 @@ export class SearchComponent {
 
 	public clearInput(): void {
 		this.inputValue = '';
+		this.searchValue.emit(this.inputValue);
 	}
 }

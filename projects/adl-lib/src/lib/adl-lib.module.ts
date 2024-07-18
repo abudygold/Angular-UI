@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { EmptySpaceDirective } from '../lib/core/directives/empty-space';
 import { InputCurrencyDirective } from '../lib/core/directives/input-currency';
 import { OnlyNumberDirective } from '../lib/core/directives/only-number';
+import { SelectAllDirective } from '../lib/core/directives/select-all';
 import { CurrencyIntlPipe } from '../lib/core/pipes/currency';
 import { ButtonComponent } from './component/button';
 import { CheckboxComponent } from './component/checkbox';
@@ -39,6 +40,7 @@ import { TableComponent } from './component/table';
 		InputCurrencyDirective,
 		OnlyNumberDirective,
 		EmptySpaceDirective,
+		SelectAllDirective,
 		CurrencyIntlPipe,
 	],
 	imports: [

@@ -11,7 +11,7 @@ export class HttpBodyRespModel {
 	public convert(dto: any): HttpBodyRespModel {
 		this.status = dto?.status ?? null;
 		this.errorCode = dto?.errorCode ?? null;
-		this.data = Array.isArray(dto) ? dto : dto?.data ?? null;
+		this.data = dto?.data ?? dto ?? null;
 		this.code = dto?.code ?? null;
 		this.message = dto?.message ?? null;
 		this.haveNext = dto?.haveNext ?? false;

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+
 import { FormModel } from '../../core/model';
 
 @Component({
@@ -28,7 +29,6 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (this.options.disabled) {
-			/* If the field is disabled, doesn't check next code */
 			this.form.disable();
 			return;
 		}

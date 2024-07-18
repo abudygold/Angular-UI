@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { FormComponent } from '../../core/common';
 
 @Component({
@@ -39,6 +40,7 @@ import { FormComponent } from '../../core/common';
 
 			<mat-checkbox
 				class="checkbox-margin"
+				color="primary"
 				[id]="options.id + '_' + i || ''"
 				[value]="item.value"
 				[disabled]="options.disabled || item.disabled || false"
@@ -64,6 +66,7 @@ import { FormComponent } from '../../core/common';
 			<span *ngIf="options.checkbox?.selectAll">
 				<mat-checkbox
 					class="example-margin"
+					color="primary"
 					[checked]="allCheck"
 					[indeterminate]="someComplete()"
 					[disabled]="options.disabled || false"
@@ -75,6 +78,7 @@ import { FormComponent } from '../../core/common';
 				<ul [ngClass]="{ 'padding-left': !options.checkbox?.selectAll }">
 					<li *ngFor="let item of options.checkbox?.data; let i = index">
 						<mat-checkbox
+							color="primary"
 							[disabled]="options.disabled || item.disabled || false"
 							[(ngModel)]="item.checked"
 							(ngModelChange)="updateAll()">
@@ -99,7 +103,7 @@ export class CheckboxComponent extends FormComponent {
 	public updateAll() {
 		this.allCheck =
 			this.options.checkbox?.data != null &&
-			this.options.checkbox?.data.every(t => t.checked);
+			this.options.checkbox?.data.every((t) => t.checked);
 
 		this.getValue.emit(this.options.checkbox?.data);
 		this.checkCheckedData();
@@ -109,7 +113,7 @@ export class CheckboxComponent extends FormComponent {
 		if (!this.options.checkbox?.data) return false;
 
 		return (
-			this.options.checkbox.data.filter(t => t.checked).length > 0 &&
+			this.options.checkbox.data.filter((t) => t.checked)?.length > 0 &&
 			!this.allCheck
 		);
 	}
@@ -119,7 +123,7 @@ export class CheckboxComponent extends FormComponent {
 
 		if (!this.options.checkbox?.data) return;
 
-		this.options.checkbox.data.forEach(t => (t.checked = _checked));
+		this.options.checkbox.data.forEach((t) => (t.checked = _checked));
 		this.getValue.emit(this.options.checkbox.data);
 		this.checkCheckedData();
 	}
@@ -127,10 +131,10 @@ export class CheckboxComponent extends FormComponent {
 	private checkCheckedData() {
 		if (!this.options.checkbox?.data) return;
 
-		const checked = this.options.checkbox.data.filter(t => t.checked);
-		this.form.setValue(checked.length > 0 ? checked.length > 0 : null);
+		const checked = this.options.checkbox.data.filter((t) => t.checked);
+		this.form.setValue(checked?.length > 0 ? checked?.length > 0 : null);
 
-		if (this.options.field?.validation && checked.length === 0)
+		if (this.options.field?.validation && checked?.length === 0)
 			this.form.markAllAsTouched();
 	}
 }

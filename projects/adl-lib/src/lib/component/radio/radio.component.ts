@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { FormComponent } from '../../core/common';
 
 @Component({
@@ -37,6 +38,7 @@ import { FormComponent } from '../../core/common';
 
 		<mat-radio-group
 			[formControl]="form"
+			color="primary"
 			[labelPosition]="options.checkbox?.labelPosition || 'after'"
 			[ngClass]="{ 'radio-group': options.checkbox?.isVertical }"
 			(change)="getValue.emit($event.value)">

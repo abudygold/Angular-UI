@@ -2,7 +2,7 @@ export class FormModel {
 	public label: string;
 	public id?: string;
 	public field?: {
-		value: string;
+		value: string | any[];
 		validation?: {
 			validators: any[];
 			message: any[];
@@ -11,6 +11,7 @@ export class FormModel {
 			inputCurrency?: boolean;
 			onlyNumber?: boolean;
 		};
+		isTextArea?: boolean;
 	};
 	public appearance?: 'fill' | 'outline';
 	public floatLabel?: 'always' | 'auto';
@@ -24,11 +25,13 @@ export class FormModel {
 		svgIcon?: string;
 	};
 	public hint?: string;
+	public characterLimit?: number;
 	public disabled?: boolean;
 	public selectOptions?: {
 		data: any[];
 		label: string;
 		value: string;
+		isMultiple?: boolean;
 	};
 	public checkbox?: {
 		data: CheckboxModel[];
