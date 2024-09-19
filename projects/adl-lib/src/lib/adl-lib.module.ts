@@ -18,7 +18,6 @@ import { InputCurrencyDirective } from '../lib/core/directives/input-currency';
 import { OnlyNumberDirective } from '../lib/core/directives/only-number';
 import { SelectAllDirective } from '../lib/core/directives/select-all';
 import { CurrencyIntlPipe } from '../lib/core/pipes/currency';
-import { ButtonComponent } from './component/button';
 import { CheckboxComponent } from './component/checkbox';
 import { ConfirmationComponent } from './component/confirmation';
 import { InputTextComponent } from './component/input-text';
@@ -29,7 +28,6 @@ import { TableComponent } from './component/table';
 
 @NgModule({
 	declarations: [
-		ButtonComponent,
 		SearchComponent,
 		TableComponent,
 		ConfirmationComponent,
@@ -60,7 +58,6 @@ import { TableComponent } from './component/table';
 		MatRadioModule,
 	],
 	exports: [
-		ButtonComponent,
 		SearchComponent,
 		TableComponent,
 		ConfirmationComponent,

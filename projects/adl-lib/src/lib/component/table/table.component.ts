@@ -18,6 +18,7 @@ import { TableModel } from '../../core/model';
 	template: `<table
 			mat-table
 			[dataSource]="table.dataSource"
+			[class]="table.tableClass ?? ''"
 			aria-describedby="table-ui"
 			matSort
 			(matSortChange)="announceSortChange($event)">
@@ -27,7 +28,12 @@ import { TableModel } from '../../core/model';
 				<th mat-header-cell *matHeaderCellDef mat-sort-header>
 					{{ table.labels[i] }}
 				</th>
-				<td mat-cell *matCellDef="let row">
+				<td
+					mat-cell
+					*matCellDef="let row"
+					[ngStyle]="
+						item.type === 'actions' ? { 'padding.px': 10, width: '10%' } : {}
+					">
 					<ng-container *ngIf="item.type === 'string'">
 						{{ row[item.column] }}
 					</ng-container>
@@ -47,7 +53,7 @@ import { TableModel } from '../../core/model';
 						{{ row[item.column] | date: item.formatDate }}
 					</ng-container>
 					<ng-container *ngIf="item.type === 'actions'">
-						<div style="display: flex; gap: 1rem;cursor: pointer">
+						<div style="display: flex; gap: .8rem;cursor: pointer">
 							<img
 								*ngFor="let action of item.actions"
 								[src]="action.filePath"

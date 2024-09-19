@@ -8,7 +8,10 @@ export class FormModel {
 			message: any[];
 		};
 		directive?: {
-			inputCurrency?: boolean;
+			inputCurrency?: {
+				countryCode: string;
+				currencyCode: string;
+			};
 			onlyNumber?: boolean;
 		};
 		isTextArea?: boolean;

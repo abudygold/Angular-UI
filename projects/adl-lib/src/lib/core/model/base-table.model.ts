@@ -25,6 +25,7 @@ export class TableModel {
 	public totalData: number;
 	public isPagination: boolean;
 	public pageSizeOptions: number[];
+	public tableClass?: string;
 
 	constructor() {
 		this.dataSource = new MatTableDataSource();

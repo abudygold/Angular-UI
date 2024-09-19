@@ -58,6 +58,10 @@ import { FormComponent } from '../../core/common';
 				appEmptySpace
 				appOnlyNumber
 				appInputCurrency
+				countryCode="{{ options.field?.directive?.inputCurrency?.countryCode }}"
+				currencyCode="{{
+					options.field?.directive?.inputCurrency?.currencyCode
+				}}"
 				[formControl]="form"
 				[placeholder]="options.placeholder || ''"
 				(input)="onInput($event)" />

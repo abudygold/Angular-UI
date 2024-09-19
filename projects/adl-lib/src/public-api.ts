@@ -4,7 +4,6 @@
 
 export * from './lib/adl-lib.module';
 
-export * from './lib/component/button';
 export * from './lib/component/search';
 export * from './lib/component/table';
 export * from './lib/component/confirmation';
